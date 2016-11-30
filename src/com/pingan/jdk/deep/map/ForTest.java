@@ -1,7 +1,7 @@
 /**
  * Copyright 2012-2016 Deppon Co., Ltd.
  */
-package com.deppon.jdk.map;
+package com.pingan.jdk.deep.map;
 
 /**
  * @author dongdaiming@deppon.com 2016年9月29日

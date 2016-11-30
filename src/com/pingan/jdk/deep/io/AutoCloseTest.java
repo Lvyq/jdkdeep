@@ -1,7 +1,7 @@
 /**
  * Copyright 2012-2016 Deppon Co., Ltd.
  */
-package com.deppon.jdk.io;
+package com.pingan.jdk.deep.io;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

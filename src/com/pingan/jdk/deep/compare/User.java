@@ -1,7 +1,7 @@
 /**
  * Copyright 2012-2016 Deppon Co., Ltd.
  */
-package com.deppon.jdk.compare;
+package com.pingan.jdk.deep.compare;
 
 /**
  * @author dongdaiming@deppon.com 2016年10月13日

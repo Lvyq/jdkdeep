@@ -1,7 +1,7 @@
 /**
  * Copyright 2012-2016 Deppon Co., Ltd.
  */
-package com.deppon.jdk.math;
+package com.pingan.jdk.deep.math;
 
 import org.junit.Test;
 
