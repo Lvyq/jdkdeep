@@ -3,6 +3,8 @@
  */
 package com.pingan.jdk.deep.compare;
 
+import java.util.Date;
+
 /**
  * @author dongdaiming@deppon.com 2016年10月13日
  */
@@ -15,6 +17,10 @@ public class User implements Comparable<User> {
 	public int compareTo(User o) {
 		// return this.getId() - o.getId();
 		return this.getId() > o.getId() ? 1 : (this.getId() < o.getId() ? -1 : 0);
+	}
+	
+	public void hello() {
+		System.out.println("hello,the time is " + new Date().toLocaleString());
 	}
 
 	/**

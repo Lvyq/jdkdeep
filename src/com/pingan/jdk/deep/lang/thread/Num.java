@@ -11,6 +11,16 @@ public class Num {
 
 	private int n;
 
+	private boolean x;
+
+	public boolean isX() {
+		return x;
+	}
+
+	public void setX(boolean x) {
+		this.x = x;
+	}
+
 	public int getN() {
 		return n;
 	}
