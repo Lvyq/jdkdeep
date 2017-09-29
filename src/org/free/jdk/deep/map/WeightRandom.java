@@ -7,6 +7,9 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * 权重随机
+ */
 public class WeightRandom<K, V extends Number> {
     
     private TreeMap<Double, K> weightMap = new TreeMap<Double, K>();
