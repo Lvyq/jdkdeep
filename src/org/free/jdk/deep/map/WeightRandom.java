@@ -31,7 +31,7 @@ public class WeightRandom<K, V extends Number> {
             weightMap.put(w.getValue().doubleValue() + lastWeight, w.getKey());
         }
         
-        if(sum != 0) {
+        if(sum != 1) {
             throw new IllegalArgumentException("random weight sum != 0.");
         }
     }
@@ -64,10 +64,10 @@ public class WeightRandom<K, V extends Number> {
     
     public static void main(String[] args) {
 //        test1();
-//        test2();
+        test2();
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("all")
     private static void test1() {
         int times = 1000000;
         long start = System.currentTimeMillis();
@@ -95,7 +95,7 @@ public class WeightRandom<K, V extends Number> {
         System.out.println("cost time in ms:" + (System.currentTimeMillis() - start));
     }
     
-    @SuppressWarnings("unused")
+    @SuppressWarnings("all")
     private static void test2() {
         int times = 1000000;
         long start = System.currentTimeMillis();
