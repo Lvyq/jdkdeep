@@ -17,6 +17,9 @@ public class SimpleWeightRandom<K, V extends Number> implements Weight<K, V> {
     private boolean startOpen = true;
 
     public SimpleWeightRandom(List<K> keys, List<V> weightes, boolean startOpen) {
+        if(keys == null || keys.isEmpty() || weightes == null || keys.size() != weightes.size()) {
+            throw new IllegalArgumentException("keys or weightes");
+        }
         this.startOpen = startOpen;
         for (int i = 0; i < keys.size(); i++) {
             K k = keys.get(i);
