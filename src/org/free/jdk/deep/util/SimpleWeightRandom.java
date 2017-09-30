@@ -1,4 +1,4 @@
-package org.free.jdk.deep.map;
+package org.free.jdk.deep.util;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * 权重随机
  */
-public class WeightRandom1<K, V extends Number> implements Weight<K, V> {
+public class SimpleWeightRandom<K, V extends Number> implements Weight<K, V> {
 
     private Map<K, WeightEntry<K,V>> weightMap = new HashMap<>();
     
@@ -16,7 +16,7 @@ public class WeightRandom1<K, V extends Number> implements Weight<K, V> {
     
     private boolean startOpen = true;
 
-    public WeightRandom1(List<K> keys, List<V> weightes, boolean startOpen) {
+    public SimpleWeightRandom(List<K> keys, List<V> weightes, boolean startOpen) {
         this.startOpen = startOpen;
         for (int i = 0; i < keys.size(); i++) {
             K k = keys.get(i);
@@ -83,7 +83,7 @@ public class WeightRandom1<K, V extends Number> implements Weight<K, V> {
             Map<String, Integer> counter = new HashMap<>(4);
 //            WeightRandom1<String, Double> random = new WeightRandom1<>
 //            (Arrays.asList("A", "B", "C", "D"), Arrays.asList(0.1, 0.2, 0.3, 0.4), true);
-            WeightRandom1<String, Integer> random = new WeightRandom1<>
+            SimpleWeightRandom<String, Integer> random = new SimpleWeightRandom<>
             (Arrays.asList("A", "B", "C", "D"), Arrays.asList(1, 2, 3, 4), true);
             for (int i = 0; i < limit; i++) {
                 String r = random.random();

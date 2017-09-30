@@ -1,4 +1,4 @@
-package org.free.jdk.deep.map;
+package org.free.jdk.deep.util;
 
 import java.util.Collections;
 import java.util.Comparator;
