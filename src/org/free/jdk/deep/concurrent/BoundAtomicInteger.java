@@ -1,26 +1,29 @@
 package org.free.jdk.deep.concurrent;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * TODO
+ * 边界原子递增
  */
-public class AtomicLongBound extends AtomicLong{
+public class BoundAtomicInteger extends AtomicInteger {
     
     private static final long serialVersionUID = -8650032295035697897L;
+    
+    private int bound;
 
-    public AtomicLongBound(int i) {
+    public BoundAtomicInteger(int i, int bound) {
         super(i);
+        this.bound = bound;
     }
 
-    public final long incrementAndGet(long bound) {
+    public int incrementWithBound() {
         for (;;) {
-            long current = get();
+            int current = get();
             if(current >= bound) {
                 set(1);
                 return get();
             }
-            long next = current + 1;
+            int next = current + 1;
             if (compareAndSet(current, next))
                 return next;
         }

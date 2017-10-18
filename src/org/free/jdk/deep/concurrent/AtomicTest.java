@@ -1,5 +1,6 @@
 package org.free.jdk.deep.concurrent;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -16,12 +17,12 @@ import org.junit.Test;
  */
 public class AtomicTest {
 
-    private static final long max4 = 9999L;
+    private static final int max4 = 9999;
 
-    private static volatile AtomicLongBound no4 = new AtomicLongBound(0);
+    private static volatile BoundAtomicInteger no4 = new BoundAtomicInteger(0, max4);
 
     public static String getIncrementSequence4() {
-        long value = no4.incrementAndGet(max4);
+        int value = no4.incrementWithBound();
         return String.format("%04d", value);
     }
 
@@ -62,6 +63,14 @@ public class AtomicTest {
             a.append(s);
             a.append(",");
         }
+        String maxs = list.stream().max(new Comparator<String>() {
+
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        }).get();
+        System.out.println(maxs);
         System.out.println(a.toString());
     }
     
