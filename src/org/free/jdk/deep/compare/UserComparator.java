@@ -1,5 +1,5 @@
 /**
- * Copyright 2012-2016 Deppon Co., Ltd.
+ * Copyright 2012-2016 free Co., Ltd.
  */
 package org.free.jdk.deep.compare;
 
@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
- * @author dongdaiming@deppon.com 2016年10月13日
+ * @author dongdaiming@free.com 2016年10月13日
  */
 public class UserComparator implements Comparator<User> {
 

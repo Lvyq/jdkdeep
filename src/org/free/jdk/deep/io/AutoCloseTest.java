@@ -1,5 +1,5 @@
 /**
- * Copyright 2012-2016 Deppon Co., Ltd.
+ * Copyright 2012-2016 free Co., Ltd.
  */
 package org.free.jdk.deep.io;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 /**
- * @author dongdaiming@deppon.com 2016年10月13日
+ * @author dongdaiming@free.com 2016年10月13日
  */
 public class AutoCloseTest {
 

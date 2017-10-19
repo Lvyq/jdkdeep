@@ -1,5 +1,8 @@
 package org.free.jdk.deep.concurrent.forkjoin;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
@@ -65,6 +68,25 @@ public class TestForkJoin {
     @Test
     public void test3() {
         System.out.println((1508391179386L - 1508391164361L) / 1000);
+    }
+    @Test
+    public void test4() throws IOException {
+        int cap = 10000;
+        DataList<String> datas = new DataList<>(cap);
+        init(datas, cap);
+        String path = "/temp/temp/data.txt";
+        File file = new File(path);
+        if(!file.exists()) {
+            file.createNewFile();
+        }
+        FileWriter in = new FileWriter(file);
+        for (String s : datas) {
+            in.write(s);
+        }
+        in.flush();
+        in.close();
+        System.out.println("fileSize:" + new File(path).length() +",dataSize:" + datas.dataSize());
+        System.out.println(file.length()/1024);
     }
 
 }

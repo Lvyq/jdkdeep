@@ -1,12 +1,12 @@
 /**
- * Copyright 2012-2016 Deppon Co., Ltd.
+ * Copyright 2012-2016 free Co., Ltd.
  */
 package org.free.jdk.deep.math;
 
 import org.junit.Test;
 
 /**
- * @author dongdaiming@deppon.com
+ * @author dongdaiming@free.com
  * 2016年10月13日
  */
 public class MathTest {

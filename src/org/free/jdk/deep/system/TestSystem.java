@@ -1,10 +1,10 @@
 /**
- * Copyright 2012-2016 Deppon Co., Ltd.
+ * Copyright 2012-2016 free Co., Ltd.
  */
 package org.free.jdk.deep.system;
 
 /**
- * @author dongdaiming@deppon.com 2016年9月28日
+ * @author dongdaiming@free.com 2016年9月28日
  */
 public class TestSystem {
 
