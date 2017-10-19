@@ -1,4 +1,4 @@
-package org.free.jdk.deep.concurrent;
+package org.free.jdk.deep.concurrent.forkjoin;
 
 import java.util.concurrent.RecursiveTask;
 
