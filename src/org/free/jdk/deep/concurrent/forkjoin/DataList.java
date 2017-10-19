@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * 可计算数据列表总字节数
+ * 可计算数据列表总字节数(数据项E必须可以获取字节大小，暂仅支持String|File)
  * @author dongdaiming
  */
 public class DataList<E> extends ArrayList<E> implements ByteList<E> {
