@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * 
+ * 可计算数据列表总字节数
  * @author dongdaiming
  */
-public class DataList<E> extends ArrayList<E> implements ComputableList<E> {
+public class DataList<E> extends ArrayList<E> implements ByteList<E> {
 
     private static final long serialVersionUID = -6981156571990363347L;
 
@@ -27,7 +27,7 @@ public class DataList<E> extends ArrayList<E> implements ComputableList<E> {
     }
     
     @Override
-    public ComputableList<E> subDataList(int fromIndex, int toIndex) {
+    public ByteList<E> subDataList(int fromIndex, int toIndex) {
         DataList<E> list = new DataList<>(toIndex - fromIndex);
         for(int i = fromIndex; i < toIndex; i++) {
             list.addData(get(i));
@@ -44,7 +44,7 @@ public class DataList<E> extends ArrayList<E> implements ComputableList<E> {
             File f = (File) e;
             dataSize += f.length();
         } else {
-            throw new IllegalArgumentException(e.getClass().getName());
+            throw new IllegalArgumentException(e == null ? "null" : e.getClass().getName());
         }
         return add(e);
     }
