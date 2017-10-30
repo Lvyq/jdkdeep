@@ -35,6 +35,40 @@ public class ThreadPoolTest {
 	}
 	
 	@Test
+	public void testFix2() throws InterruptedException {
+	    ExecutorService exec1 = Executors.newFixedThreadPool(10, new MyThreadFactory("zmxySync"));
+	    final CountDownLatch latch1 = new CountDownLatch(100);
+	    for (int i = 0; i < 100; i++) {
+	        final int n = i;
+	        exec1.execute(new Runnable() {
+	            
+	            @Override
+	            public void run() {
+	                System.out.println(Thread.currentThread().getName() + "   " + n);
+	                latch1.countDown();
+	            }
+	        });
+	    }
+	    latch1.await();
+	    
+	    
+	    ExecutorService exec2 = Executors.newFixedThreadPool(10, new MyThreadFactory("zmxySync"));
+	    final CountDownLatch latch2 = new CountDownLatch(100);
+	    for (int i = 0; i < 100; i++) {
+	        final int n = i;
+	        exec2.execute(new Runnable() {
+	            
+	            @Override
+	            public void run() {
+	                System.out.println(Thread.currentThread().getName() + "   " + n);
+	                latch2.countDown();
+	            }
+	        });
+	    }
+	    latch2.await();
+	}
+	
+	@Test
 	public void testCache() throws InterruptedException {
 		ExecutorService exec = Executors.newCachedThreadPool();
 		final CountDownLatch latch = new CountDownLatch(100);
