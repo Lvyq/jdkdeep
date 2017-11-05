@@ -16,10 +16,10 @@ public class RandomAccessFileTest {
 
 	@Test
 	public void test() throws IOException {
-		deleteLastChar("/temp/58/sh/rentalHousing.txt");
+		replaceLastChar("/temp/58/sh/rentalHousing.txt");
 	}
 	
-	public static void deleteLastChar(String path) {
+	public static void replaceLastChar(String path) {
 		RandomAccessFile raf = null;
 		try {
 			raf = new RandomAccessFile(path, "rw");
