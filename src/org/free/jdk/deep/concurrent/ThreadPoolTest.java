@@ -5,6 +5,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class ThreadPoolTest {
 	
 	@Test
 	public void testFix2() throws InterruptedException {
-	    ExecutorService exec1 = Executors.newFixedThreadPool(10, new MyThreadFactory("zmxySync"));
+	    ExecutorService exec1 = Executors.newFixedThreadPool(10, new MyThreadFactory("exec-zmxySync"));
 	    final CountDownLatch latch1 = new CountDownLatch(100);
 	    for (int i = 0; i < 100; i++) {
 	        final int n = i;
@@ -52,7 +53,7 @@ public class ThreadPoolTest {
 	    latch1.await();
 	    
 	    
-	    ExecutorService exec2 = Executors.newFixedThreadPool(10, new MyThreadFactory("zmxySync"));
+	    ExecutorService exec2 = Executors.newFixedThreadPool(10, new MyThreadFactory("exec-zmxySync"));
 	    final CountDownLatch latch2 = new CountDownLatch(100);
 	    for (int i = 0; i < 100; i++) {
 	        final int n = i;
