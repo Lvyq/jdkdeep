@@ -1,34 +1,9 @@
-package com.showshine.skynet.service;
-
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.showshine.skynet.context.Contants;
-import com.showshine.skynet.context.SystemConfigKey;
-import com.showshine.skynet.dao.cache.RedisBaseDao;
-import com.showshine.skynet.strategy.handle.BlockStrategyService;
-
 /**
  * TODO
  * @author dongdaiming
  * @date 2017年11月30日
  */
-@ContextConfiguration("classpath:applicationContext.xml")
-@RunWith(SpringJUnit4ClassRunner.class)
-public class SystemConfigServiceTest {
+public class SystemConfigServiceTest {/*
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SystemConfigServiceTest.class);
 
@@ -118,4 +93,4 @@ public class SystemConfigServiceTest {
 		
 	}
 
-}
+*/}
