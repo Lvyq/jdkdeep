@@ -152,4 +152,7 @@ public class ArrayListTest {
 	    System.out.println(list2.size());
 	}
 	
+	@Test
+	public void testCon() {}
+	
 }
