@@ -10,7 +10,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * TODO
+ * 线程间通信-基于lock的condition
  * 
  * @author dongdaiming
  * @date 2017年12月21日

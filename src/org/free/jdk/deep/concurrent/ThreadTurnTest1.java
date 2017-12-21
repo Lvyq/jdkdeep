@@ -1,7 +1,7 @@
 package org.free.jdk.deep.concurrent;
 
 /**
- * TODO
+ * 线程间通信-基于Object的wait/notify
  * 
  * @author dongdaiming
  * @date 2017年12月21日
