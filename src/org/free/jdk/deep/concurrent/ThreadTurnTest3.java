@@ -21,7 +21,7 @@ public class ThreadTurnTest3 {
 	private Semaphore s0 = new Semaphore(1);
 	private Semaphore s1 = new Semaphore(1);
 	private Semaphore s2 = new Semaphore(1);
-	private static final int LIMIT = 100;
+	private static final int LIMIT = 10000;
 
 	public static void main(String[] args) throws InterruptedException {
 		ExecutorService exec = new ThreadPoolExecutor(3, 30, 60, TimeUnit.SECONDS,
