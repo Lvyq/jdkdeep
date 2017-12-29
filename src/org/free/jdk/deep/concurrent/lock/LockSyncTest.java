@@ -33,14 +33,14 @@ public class LockSyncTest {
 		ExecutorService exec = Executors.newCachedThreadPool();
 		int tn = 8;
 		final int runn = 10000000;
-		final Lock fairLock = new ReentrantLock(true);
+		final Lock lock = new ReentrantLock(false);
 		for (int i = 0; i < tn; i++) {
 			exec.submit(new Runnable() {
 
 				public void run() {
 					StringBuilder names = new StringBuilder();
 					for (int j = 0; j < runn; j++) {
-						fairLock.lock();
+						lock.lock();
 						try {
 							names.append(Thread.currentThread().getName());
 							names.append('_');
@@ -53,7 +53,7 @@ public class LockSyncTest {
 								System.out.println(names);
 							}
 						} finally {
-							fairLock.unlock();
+							lock.unlock();
 						}
 					}
 
