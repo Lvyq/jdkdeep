@@ -18,6 +18,11 @@ public class HelloA {
         System.out.println("HelloA");
     }
     
-    
+    /**
+	 * 
+	 */
+	public final void m1() {
+
+	}
 
 }
