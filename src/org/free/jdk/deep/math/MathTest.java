@@ -58,7 +58,7 @@ public class MathTest {
 	}
 	@Test
 	public void testMathContext2() {
-		BigDecimal n1 = new BigDecimal("123456789123456789.123456789").setScale(4, RoundingMode.HALF_EVEN);
+		BigDecimal n1 = new BigDecimal(0).setScale(4, RoundingMode.HALF_EVEN);
 		BigDecimal n2 = new BigDecimal("123456789123456789.123456789").setScale(8, RoundingMode.HALF_EVEN);
 		BigDecimal n3 = new BigDecimal("123456789123456789.123456789").setScale(10, RoundingMode.HALF_EVEN);
 		System.out.println(n1.toPlainString());

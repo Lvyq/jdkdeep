@@ -96,5 +96,10 @@ public class StringTest {
 	 System.out.println("GB2312编码长度:"+a.getBytes("GB2312").length);
 	 System.out.println("==========================================");
 	 }
+	@Test
+	public void test009() throws UnsupportedEncodingException {
+		String RANGE_SQL = " SELECT %s(ID) FROM %s ";
+		System.out.println(String.format(RANGE_SQL, "MIN", "TABLE1"));
+	}
 
 }
