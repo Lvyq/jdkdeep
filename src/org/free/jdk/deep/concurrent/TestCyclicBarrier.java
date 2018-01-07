@@ -8,6 +8,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
@@ -44,7 +45,7 @@ public class TestCyclicBarrier {
 	@Test
 	public void testCyc() throws InterruptedException {
 		ExecutorService executor = Executors.newCachedThreadPool();
-		final CyclicBarrier cyc = new CyclicBarrier(11);
+		final CyclicBarrier barrier = new CyclicBarrier(11);
 		for(int i = 0; i < 10; i++) {
 			Runnable task = new Runnable() {
 				
@@ -53,7 +54,7 @@ public class TestCyclicBarrier {
 					try {
 						Thread.sleep((long) (Math.random() * 1000));
 						System.out.println(new Date().toLocaleString() + "---" + Thread.currentThread().getName() + " ready...");
-						cyc.await();
+						barrier.await();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} catch (BrokenBarrierException e) {
@@ -65,8 +66,8 @@ public class TestCyclicBarrier {
 			executor.submit(task);
 		}
 		
-		Thread.sleep(10000);
 		executor.shutdown();
+		executor.awaitTermination(5, TimeUnit.MINUTES);
 		System.out.println("main thread stoped.");
 	}
 
