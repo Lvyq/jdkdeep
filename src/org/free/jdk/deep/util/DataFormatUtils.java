@@ -7,17 +7,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.junit.Assert;
+
 /**
  * 常见数据类型格式化
  * 
  * @author dongdaiming
  */
-public class StringConvertUtils {
+public class DataFormatUtils {
 
     private final SimpleDateFormat dateFormatter;
     private final DecimalFormat decimalFormatter;
     
-    public StringConvertUtils(String datePattern, int maxDigits, int decimalScale, RoundingMode mode) {
+    public DataFormatUtils(String datePattern, int maxDigits, int decimalScale, RoundingMode mode) {
         dateFormatter = new SimpleDateFormat(datePattern);
         decimalFormatter = new DecimalFormat();
         decimalFormatter.setRoundingMode(mode);
@@ -27,14 +29,17 @@ public class StringConvertUtils {
         decimalFormatter.setMaximumFractionDigits(decimalScale);
     }
     
-    public String convert(Object data) {
+    public String format(Object data) {
         String value = "";
         if (data == null) {
             return "";
         } else if (data instanceof CharSequence) {
-            value = ((CharSequence) data).toString();
-        } else if ((data instanceof Date) || (data instanceof Calendar)) {
+            value = ((CharSequence) data).toString().trim();
+        } else if (data instanceof Date) {
             value = dateFormatter.format(data);
+        } else if (data instanceof Calendar) {
+        	Calendar c1 = (Calendar) data;
+        	value = dateFormatter.format(c1.getTime());
         } else if (data instanceof Number) {
         	if((data instanceof Integer) || (data instanceof Long) || (data instanceof Byte) 
         			|| (data instanceof Short) || (data instanceof BigInteger)) {
@@ -48,20 +53,23 @@ public class StringConvertUtils {
         return value;
     }
 
-//    public static void main(String[] args) {
-//    	StringConvertUtils c = new StringConvertUtils("yyyyMMdd", 20, 2, RoundingMode.HALF_UP);
-//    	StringBuilder s = new StringBuilder("abc");
-//    	System.out.println(c.convert("xyz") + "___" + "xyz".equals(c.convert("xyz")));
-//    	System.out.println(c.convert(s) + "__" + "abc".equals(c.convert(s)));
-//    	System.out.println(c.convert(new Date()));
-//    	System.out.println(c.convert(0));
-//    	System.out.println(c.convert((short)1));
-//    	System.out.println(c.convert((byte)1));
-//    	System.out.println(c.convert(1234567890123456L));
-//    	System.out.println(c.convert(0.456));
-//    	System.out.println(c.convert(1.456));
-//    	System.out.println(c.convert(134567.456));
-//    	System.out.println(c.convert(12345678901234.567));
-//	}
+    public static void main(String[] args) {
+    	DataFormatUtils c = new DataFormatUtils("yyyyMMdd", 20, 2, RoundingMode.HALF_UP);
+    	
+    	StringBuilder s = new StringBuilder("abc");
+    	
+//    	Assert.assertTrue("xyz".equals(c.format("xyz")));
+//    	Assert.assertTrue("abc".equals(c.format(s)));
+//    	Assert.assertTrue("20180111".equals(c.format(new Date())));
+    	Assert.assertTrue("20180111".equals(c.format(Calendar.getInstance())));
+    	Assert.assertTrue("0".equals(c.format(0)));
+    	Assert.assertTrue("1".equals(c.format((short)1)));
+    	Assert.assertTrue("1".equals(c.format((byte)1)));
+    	Assert.assertTrue("1234567890123456".equals(c.format(1234567890123456L)));
+    	Assert.assertTrue("0.46".equals(c.format(0.456)));
+    	Assert.assertTrue("1.46".equals(c.format(1.456)));
+    	Assert.assertTrue("134567.46".equals(c.format(134567.456)));
+    	Assert.assertTrue("12345678901234.57".equals(c.format(12345678901234.567)));
+	}
     
 }
