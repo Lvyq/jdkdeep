@@ -20,7 +20,7 @@ public class DataFormatUtils {
 
 	private final SimpleDateFormat dateFormatter;
 	private final DecimalFormat decimalFormatter;
-	private final String CURRENCY = "CNY";
+	private final int multi = 1;
 
 	public DataFormatUtils(String datePattern, int maxDigits, int decimalScale, RoundingMode mode) {
 		dateFormatter = new SimpleDateFormat(datePattern);
@@ -30,7 +30,7 @@ public class DataFormatUtils {
 		decimalFormatter.setMaximumIntegerDigits(maxDigits);
 		decimalFormatter.setMaximumFractionDigits(decimalScale);
 		decimalFormatter.setMinimumFractionDigits(decimalScale);
-		decimalFormatter.setCurrency(Currency.getInstance(CURRENCY));
+		decimalFormatter.setMultiplier(multi);
 	}
 
 	public String format(Object data) {

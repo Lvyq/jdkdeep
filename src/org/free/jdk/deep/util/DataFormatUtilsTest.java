@@ -87,12 +87,6 @@ public class DataFormatUtilsTest {
 //		f.setNegativePrefix("负p");
 //		f.setNegativeSuffix("负s");
 //		Assert.assertTrue("负p123负s".equals(f.format(-123)));
-		f.setParseIntegerOnly(true);
-		Assert.assertTrue("0".equals(f.format(-0)));
-		f.setParseIntegerOnly(false);
-		f.setParseBigDecimal(false);
-		System.out.println(f.format(-0));
-		Assert.assertTrue("-0".equals(f.format(-0)));
 	}
 	@Test
 	public void testCustomParse() throws ParseException {
