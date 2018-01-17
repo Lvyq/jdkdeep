@@ -6,10 +6,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Currency;
 import java.util.Date;
-
-import org.junit.Assert;
 
 /**
  * 常见数据类型格式化
@@ -20,17 +17,29 @@ public class DataFormatUtils {
 
 	private final SimpleDateFormat dateFormatter;
 	private final DecimalFormat decimalFormatter;
-	private final int multi = 1;
+	private static final int PRECISION = 22;
+	private static final int MULTIPLIER = 1;
 
-	public DataFormatUtils(String datePattern, int maxDigits, int decimalScale, RoundingMode mode) {
+	public DataFormatUtils(String datePattern, int precision, int scale, int multiplier, RoundingMode mode) {
 		dateFormatter = new SimpleDateFormat(datePattern);
 		decimalFormatter = new DecimalFormat();
 		decimalFormatter.setRoundingMode(mode);
 		decimalFormatter.setGroupingUsed(false);
-		decimalFormatter.setMaximumIntegerDigits(maxDigits);
-		decimalFormatter.setMaximumFractionDigits(decimalScale);
-		decimalFormatter.setMinimumFractionDigits(decimalScale);
-		decimalFormatter.setMultiplier(multi);
+		decimalFormatter.setMaximumIntegerDigits(precision - scale);
+		decimalFormatter.setMaximumFractionDigits(scale);
+		decimalFormatter.setMinimumFractionDigits(scale);
+		decimalFormatter.setMultiplier(multiplier);
+	}
+	
+	public DataFormatUtils(String datePattern, int decimalScale, RoundingMode mode) {
+		this(datePattern, PRECISION, decimalScale, MULTIPLIER, mode);
+	}
+	
+	public DataFormatUtils(String datePattern, String decimalPattern, RoundingMode mode) {
+		dateFormatter = new SimpleDateFormat(datePattern);
+		decimalFormatter = new DecimalFormat();
+		decimalFormatter.applyPattern(decimalPattern);
+		decimalFormatter.setRoundingMode(mode);
 	}
 
 	public String format(Object data) {
@@ -49,25 +58,11 @@ public class DataFormatUtils {
 					|| (data instanceof BigInteger)) {
 				value = String.valueOf(data);
 			} else {
+				data = new BigDecimal(String.valueOf(data));
 				value = decimalFormatter.format(data);
 			}
 		} else {
 			value = String.valueOf(data);
-		}
-		return value;
-	}
-
-	public String formatDecimal(Object data) {
-		String value = "";
-		data = data == null ? 0 : data;
-		if (data instanceof CharSequence) {
-			value = ((CharSequence) data).toString().trim();
-			data = new BigDecimal(value);
-		}
-		if (data instanceof Number) {
-			value = decimalFormatter.format(data);
-		} else {
-			throw new IllegalArgumentException(value);
 		}
 		return value;
 	}

@@ -6,6 +6,7 @@ package org.free.jdk.deep.math;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.nio.channels.SelectionKey;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
@@ -16,6 +17,14 @@ import org.junit.Test;
  */
 public class MathTest {
 
+	@Test
+	public void testAnd() {
+		System.out.println(SelectionKey.OP_READ);
+		System.out.println(SelectionKey.OP_WRITE);
+		System.out.println(SelectionKey.OP_CONNECT);
+		System.out.println(SelectionKey.OP_ACCEPT);
+		System.out.println(SelectionKey.OP_READ & SelectionKey.OP_WRITE);
+	}
 	@Test
 	public void testround() {
 		System.out.println(Math.round(11.49));// 11
@@ -90,6 +99,10 @@ public class MathTest {
 		System.out.println(format.parse(s));
 		;
 		
+	}
+	@Test
+	public void test4() {
+		System.out.println(Integer.parseInt("1 "));
 	}
 	
 }
