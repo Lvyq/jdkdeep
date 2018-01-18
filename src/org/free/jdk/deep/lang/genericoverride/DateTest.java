@@ -1,7 +1,7 @@
 /*
  * Copyright © ORG.FREE ，LTD. All Rights Reserved
  */
-package org.free.jdk.deep.lang;
+package org.free.jdk.deep.lang.genericoverride;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,6 +54,18 @@ public class DateTest {
 		boolean b = list.remove(new Date());
 		Assert.assertTrue(b);
 		Assert.assertTrue(h1 == h2);
+	}
+	
+	@Test
+	public void test3() {
+		System.out.println(null == null);
+	}
+	@Test
+	public void test4() {
+		Date now = new Date();
+//		Date now2 = new Date(System.currentTimeMillis() + 1);
+		Date now2 = new Date(System.currentTimeMillis());
+		System.out.println(now.equals(now2));
 	}
 
 }

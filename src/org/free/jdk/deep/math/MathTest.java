@@ -18,6 +18,20 @@ import org.junit.Test;
 public class MathTest {
 
 	@Test
+	public void testMove() {
+		// 无符号右移 忽略符号位，空位都以0补齐
+//		System.out.println(8 >>> 3);
+//		System.out.println(8 >> 3);
+//		System.out.println(1 << 3);
+		System.out.println(7 ^ 5);
+		System.out.println(7 ^ 6);
+		System.out.println(7 ^ 7);
+		System.out.println(7 ^ 8);
+		System.out.println(7 ^ 9);
+		System.out.println(7 ^ 10);
+		System.out.println(7 ^ 11);
+	}
+	@Test
 	public void testAnd() {
 		System.out.println(SelectionKey.OP_READ);
 		System.out.println(SelectionKey.OP_WRITE);

@@ -1,9 +1,7 @@
 /*
  * Copyright © ORG.FREE ，LTD. All Rights Reserved
  */
-package org.free.jdk.deep.lang;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
+package org.free.jdk.deep.lang.genericoverride;
 
 import java.util.Date;
 
