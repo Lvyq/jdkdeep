@@ -101,5 +101,14 @@ public class StringTest {
 		String RANGE_SQL = " SELECT %s(ID) FROM %s ";
 		System.out.println(String.format(RANGE_SQL, "MIN", "TABLE1"));
 	}
+	
+	// test010
+	@Test
+	public void test010() {
+		String s = "despacito";
+		for(int i = 0, max = 10000; i < max; i++) {
+			s += s;
+		}
+	}
 
 }
