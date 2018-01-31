@@ -90,7 +90,10 @@ public class StringTest {
 
 	@Test
 	public void test008() throws UnsupportedEncodingException {
-	String a = "名";
+//	String a = "名";
+//	String a = "中";
+	String a = "董";
+	 System.out.println("默认编码长度:"+a.getBytes().length);
 	 System.out.println("UTF-8编码长度:"+a.getBytes("UTF-8").length);
 	 System.out.println("GBK编码长度:"+a.getBytes("GBK").length);
 	 System.out.println("GB2312编码长度:"+a.getBytes("GB2312").length);
@@ -108,6 +111,27 @@ public class StringTest {
 		String s = "despacito";
 		for(int i = 0, max = 10000; i < max; i++) {
 			s += s;
+		}
+	}
+	
+	@Test
+	public void test011() {
+		Bean1 o = new Bean1();
+		String s0 = "";
+		String s = Character.toString(o.getC());
+		assertEquals("", s);
+		assertEquals( '\u0000', o.getC());
+	}
+	
+	static class Bean1 {
+		char c;
+
+		public char getC() {
+			return c;
+		}
+
+		public void setC(char c) {
+			this.c = c;
 		}
 	}
 

@@ -3,6 +3,8 @@
  */
 package org.free.jdk.deep.math;
 
+import static org.junit.Assert.assertEquals;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -114,9 +116,25 @@ public class MathTest {
 		;
 		
 	}
-	@Test
+	@Test(expected = NumberFormatException.class)
 	public void test4() {
 		System.out.println(Integer.parseInt("1 "));
+	}
+	
+	@Test
+	public void test5() {
+//		System.out.println(Byte.MIN_VALUE);
+//		System.out.println(Byte.MAX_VALUE);
+//		int n = (int) (Math.pow(2, 7) - 1);
+//		System.out.println(n);
+//		 2^(7*8 + 7) - 1
+//		long n2 = (long) (Math.pow(2, (7*8 + 7)) - 1L);
+//		System.out.println(n2);
+//		System.out.println(Long.MAX_VALUE);
+		int n2 = (int) (Math.pow(2, (32 - 1)) - 1);
+		System.out.println(n2);
+		System.out.println(Integer.MAX_VALUE);
+		assertEquals(Integer.MAX_VALUE, n2);
 	}
 	
 }
