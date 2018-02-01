@@ -31,4 +31,18 @@ public class FinalTest {
 			});
 		}
 	}
+	@Test
+	public void test2() {
+		for (int i = 0; i < 1; i++) {
+			exec1.submit(() -> {
+				FinalExample.writer();
+			});
+			
+		}
+		for (int j = 0; j < 10; j++) {
+			exec2.submit(() -> {
+				FinalExample.reader();
+			});
+		}
+	}
 }
