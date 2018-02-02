@@ -1,23 +1,19 @@
-/*
- * Copyright © PING AN INSURANCE (GROUP) COMPANY OF CHINA ，LTD. All Rights Reserved
- */
-package org.bryadong.jdkdeep.lang.loader;
+package org.bryadong.jdkdeep.classload;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * @author dongdaiming911@pingan.com
  * @date 2017年6月21日
  */
-public class WujuClassLoader extends ClassLoader {
+public class StathryClassLoader extends ClassLoader {
 
-	private String classPath;
+	private String custClassPath;
 
-	public WujuClassLoader(String classPath) {
+	public StathryClassLoader(String custClassPath) {
 		super();
-		this.classPath = classPath;
+		this.custClassPath = custClassPath;
 	}
 	
 	@Override
@@ -29,18 +25,14 @@ public class WujuClassLoader extends ClassLoader {
 	
 	protected byte[] loadClassFile(String name)  {
 		String name1 = name.replaceAll("\\.", "/");
-		String path = classPath + "/" + name1 + ".class";
+		String path = custClassPath + "/" + name1 + ".class";
 		
 		try(FileInputStream fin = new FileInputStream(path)){
 		int len = fin.available();
 		byte[] data = new byte[len];
 		fin.read(data);
 		return data;
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
