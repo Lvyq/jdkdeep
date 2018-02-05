@@ -22,7 +22,7 @@ public class ClassLoadTest {
 	public void testMyClassLoader() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		StathryClassLoader loader = new StathryClassLoader("/temp/classpath");
-		Class c = loader.loadClass("org.bryadong.jdkdeep.classload.TempClass");
+		Class c = loader.loadClass("org.stathry.jdkdeep.classload.TempClass");
 		Constructor con = c.getConstructor(String.class, String.class, String.class);
 		Object o = con.newInstance("kongming", "17621166666", "620503199906062350");
 		System.out.println(o.toString());
@@ -40,12 +40,13 @@ public class ClassLoadTest {
 		System.out.println(getLoaderName(this.getClass()));
 		System.out.println(getLoaderName(User.class));
 	}
-
-	public String getLoaderName(Class<?> c) {
-		String lname = "";
-		ClassLoader loader = c.getClassLoader();
-			lname = loader == null ? null : loader.getClass().getName();
-		return lname;
+	
+	@Test
+	public void testClassPath() {
+		URL[] urls = Launcher.getBootstrapClassPath().getURLs();
+		for (URL url : urls) {
+			System.out.println(url);
+		}
 	}
 
 	@Test
@@ -64,6 +65,13 @@ public class ClassLoadTest {
 			loader2 = loader2.getParent();
 		}
 	}
+	
+	public String getLoaderName(Class<?> c) {
+		String lname = "";
+		ClassLoader loader = c.getClassLoader();
+			lname = loader == null ? null : loader.getClass().getName();
+		return lname;
+	}
 
 	/**
 	 * @param loader
@@ -76,14 +84,6 @@ public class ClassLoadTest {
 			name = c == null ? null : c.getName();
 		}
 		return name;
-	}
-
-	@Test
-	public void testClassPath() {
-		URL[] urls = Launcher.getBootstrapClassPath().getURLs();
-		for (URL url : urls) {
-			System.out.println(url);
-		}
 	}
 
 	private static class Class1 {

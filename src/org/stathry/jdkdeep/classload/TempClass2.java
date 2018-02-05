@@ -13,6 +13,9 @@ public class TempClass2 {
 
 	private String cardId;
 
+	public TempClass2() {
+	}
+
 	public TempClass2(String realName, String phone, String cardId) {
 		this.realName = realName;
 		this.phone = phone;
