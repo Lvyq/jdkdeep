@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-import sun.print.resources.serviceui;
-
 /**
  * TODO
  * @author dongdaiming

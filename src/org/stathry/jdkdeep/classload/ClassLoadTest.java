@@ -9,7 +9,7 @@ import java.net.URL;
 import org.junit.Test;
 import org.stathry.jdkdeep.compare.User;
 
-import sun.misc.Launcher;
+//import com.sun.javaws.Launcher;
 
 /**
  * TODO
@@ -41,13 +41,13 @@ public class ClassLoadTest {
 		System.out.println(getLoaderName(User.class));
 	}
 	
-	@Test
-	public void testClassPath() {
-		URL[] urls = Launcher.getBootstrapClassPath().getURLs();
-		for (URL url : urls) {
-			System.out.println(url);
-		}
-	}
+//	@Test
+//	public void testClassPath() {
+//		URL[] urls = Launcher.getBootstrapClassPath().getURLs();
+//		for (URL url : urls) {
+//			System.out.println(url);
+//		}
+//	}
 
 	@Test
 	public void testPrintClassLoader() throws ClassNotFoundException {
