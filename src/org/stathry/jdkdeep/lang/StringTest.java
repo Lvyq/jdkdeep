@@ -1,5 +1,5 @@
 /*
- * Copyright © PING AN INSURANCE (GROUP) COMPANY OF CHINA ，LTD. All Rights Reserved
+ * Copyright © stathry@126.com All Rights Reserved
  */
 package org.stathry.jdkdeep.lang;
 
@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 import org.junit.Test;
 
 /**
- * @author dongdaiming911@pingan.com
+ * @author stathry@126.com
  * @date 2017年6月8日
  */
 public class StringTest {
@@ -20,36 +20,36 @@ public class StringTest {
 		String s = "{\r\n" + 
 				"    \"routers\": {\r\n" + 
 				"        \"PHONE_CHECK1\": {\r\n" + 
-				"            \"routingType\": \"1\",\r\n" + 
+				"            \"routingType\": \"W\",\r\n" + 
+				"            \"retry\": \"true\",\r\n" + 
+				"            \"retryTimes\": \"3\",\r\n" + 
 				"            \"routingItems\": [\r\n" + 
 				"                {\r\n" + 
 				"                    \"flag\": \"ORG1\",\r\n" + 
 				"                    \"beanName\": \"service1\",\r\n" + 
-				"                    \"priority\": \"10\",\r\n" + 
 				"                    \"weight\": \"2\"\r\n" + 
 				"                },\r\n" + 
 				"                {\r\n" + 
 				"                    \"flag\": \"ORG2\",\r\n" + 
 				"                    \"beanName\": \"service2\",\r\n" + 
-				"                    \"priority\": \"9\",\r\n" + 
 				"                    \"weight\": \"1\"\r\n" + 
 				"                }\r\n" + 
 				"            ]\r\n" + 
 				"        },\r\n" + 
 				"        \"PHONE_CHECK2\": {\r\n" + 
-				"            \"routingType\": \"2\",\r\n" + 
+				"            \"routingType\": \"P\",\r\n" + 
+				"            \"retry\": \"true\",\r\n" + 
+				"            \"retryTimes\": \"2\",\r\n" + 
 				"            \"routingItems\": [\r\n" + 
 				"                {\r\n" + 
 				"                    \"flag\": \"ORG1\",\r\n" + 
 				"                    \"beanName\": \"service1\",\r\n" + 
-				"                    \"priority\": \"10\",\r\n" + 
-				"                    \"weight\": \"2\"\r\n" + 
+				"                    \"priority\": \"9\"\r\n" + 
 				"                },\r\n" + 
 				"                {\r\n" + 
 				"                    \"flag\": \"ORG2\",\r\n" + 
 				"                    \"beanName\": \"service2\",\r\n" + 
-				"                    \"priority\": \"9\",\r\n" + 
-				"                    \"weight\": \"1\"\r\n" + 
+				"                    \"priority\": \"10\"\r\n" + 
 				"                }\r\n" + 
 				"            ]\r\n" + 
 				"        }\r\n" + 

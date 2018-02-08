@@ -1,5 +1,5 @@
 /*
- * Copyright © PING AN INSURANCE (GROUP) COMPANY OF CHINA ，LTD. All Rights Reserved
+ * Copyright © stathry@126.com All Rights Reserved
  */
 package org.stathry.jdkdeep.lang;
 
@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * @author dongdaiming911@pingan.com
+ * @author stathry@126.com
  * @date 2017年6月8日
  */
 public class IntegerTest {
