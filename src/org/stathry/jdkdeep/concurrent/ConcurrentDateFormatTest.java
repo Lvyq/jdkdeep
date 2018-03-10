@@ -50,4 +50,9 @@ public class ConcurrentDateFormatTest {
 		System.out.println(counter.get());
 	}
 
+	@Test
+	public void testFormat() {
+		new SimpleDateFormat("abc").format(new Date());
+	}
+
 }
