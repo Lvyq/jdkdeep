@@ -6,6 +6,7 @@ package org.stathry.jdkdeep.lang;
 import static org.junit.Assert.*;
 
 import java.io.UnsupportedEncodingException;
+import java.util.UUID;
 
 import org.junit.Test;
 
@@ -167,6 +168,10 @@ public class StringTest {
 		String s = Character.toString(o.getC());
 		assertEquals("", s);
 		assertEquals('\u0000', o.getC());
+	}
+	@Test
+	public void test012() {
+        System.out.println(UUID.randomUUID().toString());
 	}
 
 	static class Bean1 {

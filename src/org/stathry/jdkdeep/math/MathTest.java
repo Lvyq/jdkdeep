@@ -3,7 +3,7 @@
  */
 package org.stathry.jdkdeep.math;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -22,24 +22,27 @@ public class MathTest {
 	@Test
 	public void testMove() {
 		// 无符号右移 忽略符号位，空位都以0补齐
-//		System.out.println(8 >>> 3);
-//		System.out.println(8 >> 3);
-//		System.out.println(1 << 3);
-		System.out.println(7 ^ 5);
-		System.out.println(7 ^ 6);
-		System.out.println(7 ^ 7);
-		System.out.println(7 ^ 8);
-		System.out.println(7 ^ 9);
-		System.out.println(7 ^ 10);
-		System.out.println(7 ^ 11);
+        assertEquals(2, 8 >>> 2);
+        assertEquals(0, 8 >>> 5);
+
+        assertEquals(2, 8 >> 2);
+        assertEquals(0, 8 >> 5);
+
+        assertEquals(8, 4 << 1);
+        assertEquals(16, 4 << 2);
 	}
+
+	@Test
+	public void testXOR() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println("7&" + i + "=" + (7 ^ i));
+//            assertEquals((7 - i), 7 ^ i);
+        }
+	}
+
 	@Test
 	public void testAnd() {
-		System.out.println(SelectionKey.OP_READ);
-		System.out.println(SelectionKey.OP_WRITE);
-		System.out.println(SelectionKey.OP_CONNECT);
-		System.out.println(SelectionKey.OP_ACCEPT);
-		System.out.println(SelectionKey.OP_READ & SelectionKey.OP_WRITE);
+
 	}
 	@Test
 	public void testround() {

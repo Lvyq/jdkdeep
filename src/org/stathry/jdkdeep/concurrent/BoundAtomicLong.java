@@ -10,7 +10,7 @@ public class BoundAtomicLong extends AtomicLong {
 
     private long bound;
 
-    public BoundAtomicLong(long i, int bound) {
+    public BoundAtomicLong(long i, long bound) {
         super(i);
         this.bound = bound;
     }
