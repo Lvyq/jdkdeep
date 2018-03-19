@@ -32,18 +32,10 @@ public class HashTest {
 	}
 
 	static class PhoneContact {
-
 		/** 联系人名称 */
 		private String contactName;
 		/** 联系人手机号 */
 		private String phone;
-
-		public PhoneContact(String contactName, String phone) {
-			super();
-			this.contactName = contactName;
-			this.phone = phone;
-		}
-
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -64,6 +56,12 @@ public class HashTest {
 			}
 			PhoneContact o = (PhoneContact) obj;
 			return this.phone.equals(o.getPhone()) && this.contactName.equals(o.getContactName());
+		}
+
+		public PhoneContact(String contactName, String phone) {
+			super();
+			this.contactName = contactName;
+			this.phone = phone;
 		}
 
 		public String getContactName() {
