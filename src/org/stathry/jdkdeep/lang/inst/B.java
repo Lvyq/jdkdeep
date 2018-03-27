@@ -1,7 +1,6 @@
 package org.stathry.jdkdeep.lang.inst;
 
 public class B extends A {
-
     private static int f3 = initF3();
     private int f4 = initF4();
 
@@ -22,12 +21,8 @@ public class B extends A {
         return 0;
     }
 
-    /**
-     * @return
-     */
     private int initF4() {
         System.out.println("8B.initF4");
         return 0;
     }
-
 }

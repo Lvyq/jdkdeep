@@ -4,6 +4,7 @@
 package org.stathry.jdkdeep.math;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -135,6 +136,15 @@ public class NumberTest {
 		f.setParseIntegerOnly(false);
 		f.setParseBigDecimal(true);
 		Assert.assertTrue(new BigDecimal("123.456").equals(f.parse("123.456")));
+	}
+
+	@Test
+	public void testBigInt() {
+        System.out.println(Long.MAX_VALUE);
+        BigInteger bl=new BigInteger(String.valueOf(Long.MAX_VALUE));
+        BigInteger bInt = bl.multiply(BigInteger.TEN);
+        System.out.println(bInt);
+        Assert.assertTrue(bInt.compareTo(bl) > 0);
 	}
 
 }
