@@ -190,6 +190,19 @@ public class StringTest {
 		Assert.assertEquals("com",list.get(list.size() - 1));
 	}
 
+	@Test
+	public void testAscii() {
+		int n1 = (int)'0';
+		System.out.println(n1);
+		Assert.assertEquals(48, n1);
+		int n2 = (int)'A';
+		System.out.println(n2);
+		Assert.assertEquals(65, n2);
+		int n3 = (int)'a';
+		System.out.println(n3);
+		Assert.assertEquals(97, n3);
+	}
+
 	static class Bean1 {
 		char c;
 
