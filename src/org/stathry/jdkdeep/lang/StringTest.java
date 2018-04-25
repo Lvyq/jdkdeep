@@ -6,8 +6,12 @@ package org.stathry.jdkdeep.lang;
 import static org.junit.Assert.*;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -172,6 +176,18 @@ public class StringTest {
 	@Test
 	public void test012() {
         System.out.println(UUID.randomUUID().toString());
+	}
+
+	@Test
+	public void testCompare() {
+        List<String> list = Arrays.asList("antlr", "aopalliance", "c3p0", "cglib", "com", "COM", "18");
+		Collections.shuffle(list);
+		System.out.println("乱序:" + list);
+		Collections.sort(list);
+		System.out.println("升序排序后：" + list);
+		Assert.assertEquals("18",list.get(0));
+		Assert.assertEquals("COM",list.get(1));
+		Assert.assertEquals("com",list.get(list.size() - 1));
 	}
 
 	static class Bean1 {
