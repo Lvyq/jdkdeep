@@ -179,7 +179,7 @@ public class StringTest {
 	}
 
 	@Test
-	public void testCompare() {
+	public void testStringListCompare() {
         List<String> list = Arrays.asList("antlr", "aopalliance", "c3p0", "cglib", "com", "COM", "18");
 		Collections.shuffle(list);
 		System.out.println("乱序:" + list);
