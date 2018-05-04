@@ -6,17 +6,12 @@ package org.stathry.jdkdeep.string;
 import static org.junit.Assert.*;
 
 import java.io.UnsupportedEncodingException;
-<<<<<<< .mine
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-=======
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
->>>>>>> .theirs
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -236,7 +231,6 @@ public class StringTest {
         for (int i = 0; i < n; i++) {
             a = l.get(i).split(",");
 //            System.out.println(Arrays.toString(a));
-<<<<<<< .mine
         }
         long end = System.currentTimeMillis();
         System.out.println("testSplit1:" + (end - start));
@@ -261,7 +255,6 @@ public class StringTest {
         System.out.println("testSplitCompile:" + (end - start));
 	}
 
-=======
 
 
 
@@ -286,7 +279,6 @@ public class StringTest {
 
 
 
->>>>>>> .theirs
 	static class Bean1 {
 		char c;
 

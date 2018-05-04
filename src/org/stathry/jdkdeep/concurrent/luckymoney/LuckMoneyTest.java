@@ -17,29 +17,41 @@ import java.util.concurrent.TimeUnit;
  */
 public class LuckMoneyTest {
 
-    private static final int TIMES = 10000;
+    private static final int THS = 8;
+    private static final int TIMES = 100000;
 
     LuckyMoneyService service = new LuckyMoneyService();
 
     @Test
-    public void testRushLuckyMoney() throws InterruptedException {
-        ExecutorService exec = Executors.newFixedThreadPool(TIMES);
-        double money = 88;
+    public void testRandomAllocateMoney() throws InterruptedException {
+        ExecutorService exec = Executors.newFixedThreadPool(THS);
+//        double money = 1000;
+//        int n = 10;
+
+// double money = 100;
+//        int n = 100;
+
+ double money = 10;
         int n = 100;
 
-        for (int i = 0; i < n; i++) {
-//            final long uid = i;
+        for (int i = 0; i < THS; i++) {
             exec.submit(new Runnable() {
                 @Override
                 public void run() {
-                    List<String> gifts = service.randomAllocateMoney(money, n);
-                    BigDecimal sum = service.sumGifts(gifts);
-                    System.out.println("sum:" + sum + ", TIMES:" + n);
-                    Assert.isTrue(sum.compareTo(BigDecimal.valueOf(money)) == 0);
+                    List<BigDecimal> gifts;
+                    BigDecimal sum;
+                    String thName = Thread.currentThread().getName();
+                    for (int j = 0; j < TIMES; j++) {
+                        System.out.println("curThName:" + thName + ",curTimes:" + j);
+                        gifts = service.randomAllocateMoney(money, n);
+                        sum = service.sumGifts(gifts);
+//                        System.out.println("sum:" + sum + ", THS:" + n);
+                        Assert.isTrue(sum.compareTo(BigDecimal.valueOf(money)) == 0);
+                    }
                 }
             });
         }
         exec.shutdown();
-        exec.awaitTermination(300, TimeUnit.SECONDS);
+        exec.awaitTermination(10, TimeUnit.MINUTES);
     }
 }

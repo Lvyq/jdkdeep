@@ -1,12 +1,10 @@
 package org.stathry.jdkdeep.util;
 
 import org.stathry.jdkdeep.concurrent.BoundAtomicLong;
-import org.stathry.jdkdeep.lang.StringUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 public class OrderUtils {
 
@@ -52,7 +50,7 @@ public class OrderUtils {
             String su = leftPad(userId, userIdLength);
             order = String.format(orderFormat.format(), time, ss, su);
         }
-        AssertUtils.isTrue(order.length() == length, "error length." );
+        Assert.isTrue(order.length() == length, "error length." );
         return order;
     }
 
@@ -70,11 +68,11 @@ public class OrderUtils {
     }
 
     private void valid(int length, String timeFormat, int sequenceLength, int userIdLength) {
-        AssertUtils.isTrue((length > 0 && length <= MAX_LENGTH), "invalid length." );
-        AssertUtils.isTrue((timeFormat != null && timeFormat.length() > 0), "invalid timeFormat." );
+        Assert.isTrue((length > 0 && length <= MAX_LENGTH), "invalid length." );
+        Assert.isTrue((timeFormat != null && timeFormat.length() > 0), "invalid timeFormat." );
         new SimpleDateFormat(timeFormat).format(new Date());
-        AssertUtils.isTrue((sequenceLength > 0 && sequenceLength <= MAX_PARAM_LENGTH), "invalid sequenceLength." );
-        AssertUtils.isTrue((userIdLength >= 0 && userIdLength <= MAX_PARAM_LENGTH), "invalid userIdLength." );
+        Assert.isTrue((sequenceLength > 0 && sequenceLength <= MAX_PARAM_LENGTH), "invalid sequenceLength." );
+        Assert.isTrue((userIdLength >= 0 && userIdLength <= MAX_PARAM_LENGTH), "invalid userIdLength." );
     }
 
 

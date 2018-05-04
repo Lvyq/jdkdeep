@@ -3,7 +3,6 @@ package org.stathry.jdkdeep.util;
 import org.junit.Test; 
 import org.junit.Before; 
 import org.junit.After;
-import org.stathry.jdkdeep.util.AssertUtils;
 import org.stathry.jdkdeep.util.OrderUtils;
 
 import java.util.Map;
@@ -81,7 +80,7 @@ public void testOrderUserId() throws Exception {
     exec.shutdown();
     exec.awaitTermination(3, TimeUnit.MINUTES);
     System.out.println(all.size());
-    AssertUtils.isTrue(all.size() == (n * limit), "error.");
+    Assert.isTrue(all.size() == (n * limit), "error.");
     System.out.println("n=" + n + ",limit=" + limit + ",map size=" + all.size() + ",ms=" + (System.currentTimeMillis() - start));
 }
 
