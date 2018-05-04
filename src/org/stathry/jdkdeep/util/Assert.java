@@ -1,12 +1,16 @@
 package org.stathry.jdkdeep.util;
 
-public class AssertUtils {
+public class Assert {
 
-    private AssertUtils() {}
+    private Assert() {}
 
     public static void isTrue(boolean expression, String message) {
         if (!expression) {
             throw new IllegalArgumentException(message);
         }
+    }
+
+    public static void isTrue(boolean expression) {
+        isTrue(expression, "illegal argument.");
     }
 }
