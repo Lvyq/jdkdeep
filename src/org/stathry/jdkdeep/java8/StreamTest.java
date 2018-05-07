@@ -3,6 +3,7 @@ package org.stathry.jdkdeep.java8;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -66,6 +68,22 @@ public class StreamTest {
 		System.out.println(sum);
 	}
 
+    @Test(expected = IllegalStateException.class)
+    public void testSum2() {
+        // 每个流只能消费一次，所以如果要做多种操作就需要多次构造流
+        IntStream s1 = IntStream.of(1, 3, 4);
+        System.out.println(s1.sum());
+        System.out.println(s1.max().getAsInt());
+    }
+
+	@Test
+    public void testSum3() {
+        List<BigDecimal> gifts = Arrays.asList(BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.TEN);
+        BigDecimal sum = gifts.stream().reduce( (a, b) -> a.add(b)).get();
+        System.out.println(sum);
+        Assert.assertEquals(11.0, sum.doubleValue(), 0);
+    }
+
 	@Test
 	public void testIntStream() {
 		// 每个流只能消费一次，所以如果要做多种操作就需要多次构造流
@@ -79,13 +97,7 @@ public class StreamTest {
 		System.out.println(s3.average().getAsDouble());
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testSum2() {
-		// 每个流只能消费一次，所以如果要做多种操作就需要多次构造流
-		IntStream s1 = IntStream.of(1, 3, 4);
-		System.out.println(s1.sum());
-		System.out.println(s1.max().getAsInt());
-	}
+
 	
 	@Test
 	public void testMap() {

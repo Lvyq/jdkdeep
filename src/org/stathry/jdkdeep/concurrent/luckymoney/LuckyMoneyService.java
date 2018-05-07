@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,34 +26,25 @@ public class LuckyMoneyService {
     public List<BigDecimal> randomAllocateMoney(double money, int num) {
         List<BigDecimal> gifts;
         if (num == 1) {
-            gifts = new ArrayList<>(1);
-            gifts.add(DECIMAL.valueOf(money));
-            return gifts;
+            return Arrays.asList(DECIMAL.valueOf(money));
         }
-        if (money / num > MAX.doubleValue()) {
-            throw new IllegalArgumentException("illegal money:" + money + ",too big.");
-        }
-        if (money / num < MIN.doubleValue()) {
-            throw new IllegalArgumentException("illegal money:" + money + ",too little.");
-        }
+
+        checkRange(money, num);
+
         // TODO 刚好大或刚好小，直接均分
+        // TODO 预先判断金额是否太大或太小
         gifts = new ArrayList<>(num);
         BigDecimal total = DECIMAL.valueOf(money);
         BigDecimal sum = DECIMAL.valueOf(0);
         BigDecimal bn;
         BigDecimal curMax = MAX;
-        int nSum = 0;
+        BigDecimal curMin = MIN;
         BigDecimal c;
-        SecureRandom random = new SecureRandom();
         int[] an = new int[num];
-        for (int i = 0, size = num; i < size; i++) {
-            an[i] = random.nextInt(num);
-            nSum += an[i];
-        }
+        int nSum = randomInitArrayAndSum(an, num);
         BigDecimal bSum = DECIMAL.valueOf(nSum);
         BigDecimal rate;
         for (int i = 0, size = num; i < size; i++) {
-
             if (i == size - 1) {
                 c = DECIMAL.subtract(total, sum);
             } else {
@@ -62,70 +54,54 @@ public class LuckyMoneyService {
 
                 if (c.compareTo(MIN) <= 0) {
                     c = MIN;
-                } else {
-                    if (c.compareTo(MAX) >= 0) {
-                        c = MAX;
-                    }
-                    curMax = DECIMAL.subtract(DECIMAL.subtract(total, sum), DECIMAL.multiply(bn, MIN));
-                    curMax = curMax.compareTo(MAX) > 0 ? MAX : curMax;
-                    c = c.compareTo(curMax) > 0 ? curMax : c;
+                } else if (c.compareTo(MAX) >= 0) {
+                    c = MAX;
                 }
+                curMax = DECIMAL.subtract(DECIMAL.subtract(total, sum), DECIMAL.multiply(bn, MIN));
+                curMax = curMax.compareTo(MAX) > 0 ? MAX : curMax;
+                c = c.compareTo(curMax) > 0 ? curMax : c;
 
-                sum = DECIMAL.add(sum, c);
+                curMin = DECIMAL.subtract(DECIMAL.subtract(total, sum), DECIMAL.multiply(bn, MAX));
+                curMin = curMin.compareTo(MIN) < 0 ? MIN : curMin;
+                c = c.compareTo(curMin) < 0 ? curMin : c;
             }
-            Assert.isTrue(c.compareTo(MIN) >= 0, "curSum=" + sum.toString()
+
+            sum = DECIMAL.add(sum, c);
+            Assert.isTrue(c.compareTo(MIN) >= 0 && c.compareTo(MAX) <= 0, "curSum=" + sum.toString()
                     + ",curLuckyMoney=" + c.toString() + ",curMax=" + curMax.toString()
                     + ",gifts=" + gifts);
-
             gifts.add(c);
-
         }
-//        System.out.println("sort before:" + gifts);
-        Collections.sort(gifts);
-////        System.out.println("before:" + gifts);
-        BigDecimal last = gifts.get(num - 1);
-        BigDecimal src;
-        BigDecimal cur;
-        if (last.compareTo(MAX) > 0) {
-            BigDecimal remain = DECIMAL.subtract(last, MAX);
-            gifts.set(num - 1, MAX);
-            for (int i = 0; i < num; i++) {
-                if (remain.compareTo(BigDecimal.ZERO) == 0) {
-                    break;
-                }
-                src = gifts.get(i);
-                cur = DECIMAL.add(src, remain);
-                cur = cur.compareTo(MAX) >= 0 ? MAX : cur;
-                gifts.set(i, cur);
-                remain = DECIMAL.subtract(remain, DECIMAL.subtract(cur, src));
-            }
-        }
-//
-        last = gifts.get(num - 1);
-        BigDecimal first = gifts.get(0);
-
-//        System.out.println("gifts:" + gifts);
-        Assert.isTrue(last.compareTo(MAX) <= 0 && last.compareTo(MIN) >= 0, "last=" + last.toString());
-        Assert.isTrue(first.compareTo(MAX) <= 0 && first.compareTo(MIN) >= 0, "first=" + first.toString());
         Collections.shuffle(gifts);
         return gifts;
     }
 
+    private void checkRange(double money, int num) {
+        if (money / num > MAX.doubleValue()) {
+            throw new IllegalArgumentException("illegal money:" + money + ",too big.");
+        }
+        if (money / num < MIN.doubleValue()) {
+            throw new IllegalArgumentException("illegal money:" + money + ",too little.");
+        }
+    }
+
+//    times:1000000,total cost times:17369
     public static void main(String[] args) throws InterruptedException {
+        long start = System.currentTimeMillis();
         LuckyMoneyService s = new LuckyMoneyService();
         BigDecimal sum;
         List<BigDecimal> gifts;
-//        double money = 1000;
-//        int n = 10;
+        double money = 1000;
+        int n = 10;
 
- double money = 100;
-        int n = 100;
+//        double money = 100;
+//        int n = 100;
 
 // double money = 100;
 //        int n = 10;
         int times = 1000000;
         for (int i = 0; i < times; i++) {
-            System.out.println("curTimes:" + i);
+//            System.out.println("curTimes:" + i);
             gifts = s.randomAllocateMoney(money, n);
             sum = s.sumGifts(gifts);
 //        System.out.println(sum);
@@ -133,12 +109,24 @@ public class LuckyMoneyService {
             Assert.isTrue(gifts.size() == n);
 //            Thread.sleep(50);
         }
+        long end = System.currentTimeMillis();
+        System.out.println("times:" + times + ",total cost times:" + (end - start));
     }
 
     public BigDecimal sumGifts(List<BigDecimal> gifts) {
         BigDecimal sum = BigDecimal.ZERO;
         for (int i = 0, size = gifts.size(); i < size; i++) {
             sum = DECIMAL.add(sum, gifts.get(i));
+        }
+        return sum;
+    }
+
+    private int randomInitArrayAndSum(int[] a, int n) {
+        int sum = 0;
+        SecureRandom random = new SecureRandom();
+        for (int i = 0, size = n; i < size; i++) {
+            a[i] = random.nextInt(n);
+            sum += a[i];
         }
         return sum;
     }

@@ -4,6 +4,7 @@
 package org.stathry.jdkdeep.collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,12 @@ import org.junit.Test;
  * @date 2017年6月6日
  */
 public class ArrayListTest {
+
+    @Test
+    public void testCollectionsNCopies() {
+        List<String> list = Collections.nCopies(5, "a");
+        System.out.println(list);
+    }
 
 	@Test
 	public void testAddByIndex() {
