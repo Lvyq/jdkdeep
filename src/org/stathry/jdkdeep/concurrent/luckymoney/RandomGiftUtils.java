@@ -1,7 +1,6 @@
 package org.stathry.jdkdeep.concurrent.luckymoney;
 
 import org.stathry.jdkdeep.util.Assert;
-import org.stathry.jdkdeep.util.DecimalUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,18 +11,26 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 随机生成红包
+ * 随机红包生成
  *
  * @author dongdaiming
  * @date 2018/5/3
  */
-public class LuckyMoneyService2 {
+public class RandomGiftUtils {
 
-    private static final DecimalUtils DECIMAL = new DecimalUtils(5, 2, RoundingMode.HALF_UP);
     private static final int MIN = 1;
     private static final int MAX = 20000;
 
-    public static List<Integer> randomAllocateMoney(int money, int num) {
+    private static final int SCALE = 2;
+    private static final RoundingMode MODE = RoundingMode.HALF_UP;
+
+    /**
+     * 生成随机红包(最高200元,最低1分)
+     * @param money 红包总金额(单位:分)
+     * @param num 红包份数
+     * @return
+     */
+    public static List<Integer> randomGifts(int money, int num) {
         List<Integer> gifts;
         if (num == 1) {
             return Arrays.asList(Integer.valueOf(money));
@@ -32,12 +39,12 @@ public class LuckyMoneyService2 {
         checkRange(money, num);
 
         // 刚好最大或刚好最小，则直接均分
-        if((gifts = quickAllocate(money, num)) != null) {
+        if((gifts = quickFill(money, num)) != null) {
             return gifts;
         }
 
         gifts = new ArrayList<>(num);
-        BigDecimal total = DECIMAL.valueOf(money);
+        BigDecimal total = BigDecimal.valueOf(money);
         // 当前红包金额总和
         int sum = 0;
         // 当前红包允许最大金额
@@ -51,7 +58,7 @@ public class LuckyMoneyService2 {
         // 各个红包权重
         int[] an = new int[num];
         // 权重份数
-        BigDecimal share = DECIMAL.valueOf(randomInitArrayAndSum(an, num));
+        BigDecimal share = BigDecimal.valueOf(randomInitArrayAndSum(an, num));
         // 当前红包金额占比
         BigDecimal rate;
         for (int i = 0, size = num; i < size; i++) {
@@ -60,9 +67,9 @@ public class LuckyMoneyService2 {
                 c = money - sum;
             } else {
                 rn = num - i - 1;
-                rate = DECIMAL.divide(DECIMAL.valueOf(an[i]), share);
+                rate = BigDecimal.valueOf(an[i]).divide(share, SCALE, MODE);
                 // 按各自权重计算红包金额
-                c = DECIMAL.multiply(total, rate).intValue();
+                c = total.multiply(rate).intValue();
 
                 // 预先判断金额是否太大或太小
                 curMax = money - sum - rn * MIN;
@@ -78,13 +85,13 @@ public class LuckyMoneyService2 {
             Assert.isTrue(c >= MIN && c <= MAX,"c=" + c);
             gifts.add(c);
         }
-        // 打乱
+        // 打乱红包顺序
         Collections.shuffle(gifts);
 //        System.out.println(gifts);
         return gifts;
     }
 
-    private static List<Integer> quickAllocate(int money, int num) {
+    private static List<Integer> quickFill(int money, int num) {
         List<Integer> gifts = null;
         if(money == num * MIN) {
             gifts = Collections.nCopies(num, MIN);
