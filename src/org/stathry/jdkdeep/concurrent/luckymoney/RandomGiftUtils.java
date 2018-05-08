@@ -31,12 +31,12 @@ public class RandomGiftUtils {
      * @return
      */
     public static List<Integer> randomGifts(int money, int num) {
+        checkRange(money, num);
+
         List<Integer> gifts;
         if (num == 1) {
             return Arrays.asList(Integer.valueOf(money));
         }
-
-        checkRange(money, num);
 
         // 刚好最大或刚好最小，则直接均分
         if((gifts = quickFill(money, num)) != null) {
