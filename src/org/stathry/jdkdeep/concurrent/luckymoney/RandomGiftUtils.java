@@ -101,7 +101,10 @@ public class RandomGiftUtils {
         return gifts;
     }
 
-    private static void checkRange(double money, int num) {
+    private static void checkRange(int money, int num) {
+        if(money < MIN || num < 1) {
+            throw new IllegalArgumentException("illegal money:" + money + " or gifts num:" + num);
+        }
         if (money / MAX > num) {
             throw new IllegalArgumentException("illegal money:" + money + ",too big.");
         }

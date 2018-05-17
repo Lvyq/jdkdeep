@@ -5,6 +5,7 @@ package org.stathry.jdkdeep.lang;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -83,6 +84,26 @@ public class IntegerTest {
 		System.out.println(i2.intValue());
 		System.out.println(i1 == i2);
 	}
+
+    @Test
+    public void testParseInt1() {
+        Assert.assertEquals(1, Integer.parseInt("1"));
+        Assert.assertEquals(1, Integer.parseInt("01"));
+        Assert.assertEquals(20, Integer.parseInt("020"));
+
+        System.out.println(Integer.parseInt("11", 16));
+        Assert.assertEquals(17, Integer.parseInt("11", 16));
+    }
+
+    @Test
+    public void testParseInt2() {
+        Integer.parseInt(" 1 ");
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void testParseInt3() {
+        Integer.parseInt(" 1 ");
+    }
 	
 	public void reset(Integer i2, Integer i3) {
 //		i2 = new Integer(100);
