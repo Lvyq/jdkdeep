@@ -3,19 +3,43 @@
  */
 package org.stathry.jdkdeep.map;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author dongdaiming@free.com 2016年9月29日
  */
 public class HashMapTest {
+
+    // 不断往map中put数据,put 10000个时再清空，会发现可用内存是先逐渐减小，然后再逐渐增大(这说明put到map中又被清除的数据被回收了)
+//296796688
+//287191744
+//248771952
+//95092784
+//507089712
+//488760616
+//461266976
+//452102424
+    @Test
+    public void testLoopPutAndClear() {
+        long start = System.currentTimeMillis();
+        Map<Long, Long> map = new HashMap<>();
+        for (long i = 0, max = Long.MAX_VALUE; i < max; i++) {
+            map.put(i, i);
+            if (i % 10000 == 0) {
+                map.clear();
+                System.out.println(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start));
+                System.out.println("freeMemory:" + Runtime.getRuntime().freeMemory());
+            }
+        }
+    }
 
 	@Test
     public void testInitArray() {
