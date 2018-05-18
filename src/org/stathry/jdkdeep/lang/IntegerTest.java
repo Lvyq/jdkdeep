@@ -14,7 +14,30 @@ import org.junit.Test;
  */
 public class IntegerTest {
 
-	@Test
+    // sum:2305843005992468481, time:1572, 1902, 1658
+    @Test
+    public void testPrimitiveSum() {
+        long start = System.currentTimeMillis();
+        long sum = 0;
+        for (int i = 0, max = Integer.MAX_VALUE; i < max ; i++) {
+            sum += i;
+        }
+        System.out.println("sum:" + sum + ", time:" + (System.currentTimeMillis() - start));
+    }
+
+    // sum:2305843005992468481, time:1162, 1165
+    @Test
+    public void testIntegerSum() {
+        long start = System.currentTimeMillis();
+        long sum = 0;
+        for (int i = 0; i < Integer.MAX_VALUE ; i++) {
+            sum += i;
+        }
+        System.out.println("sum:" + sum + ", time:" + (System.currentTimeMillis() - start));
+    }
+
+
+    @Test
 	public void test1() {
 		Integer i1 = 1;
 		Integer i2 = 1;
