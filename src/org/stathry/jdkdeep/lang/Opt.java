@@ -27,5 +27,7 @@ public enum Opt {
         }
     };
 
+    // 使用enum实现接口也可以使用类似效果
+    // 并且推荐使用接口方式，因为更具伸缩性
     abstract int apply(int a, int b);
 }

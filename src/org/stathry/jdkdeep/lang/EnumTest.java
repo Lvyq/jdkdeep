@@ -13,9 +13,15 @@ public class EnumTest {
         Assert.assertEquals(1, Opt.SUB.apply(3 , 2));
         Assert.assertEquals(6, Opt.MUL.apply(3 , 2));
         Assert.assertEquals(1, Opt.DIV.apply(3 , 2));
+
         Assert.assertEquals(Opt.ADD, Enum.valueOf(Opt.class, "ADD"));
+
         Assert.assertEquals(Opt.ADD, Opt.valueOf("ADD"));
+
+        // values方法是在编译期间jvm创建的
+        // 与values方法相似的有java.lang.Class.getEnumConstants()
         Assert.assertEquals(4, Opt.values().length);
+
         Set<Opt> opts1 = new HashSet<>(Arrays.asList(Opt.ADD, Opt.SUB));
         Set<Opt> opts2 = EnumSet.of(Opt.ADD, Opt.SUB);
         Assert.assertEquals(opts1, opts2);
