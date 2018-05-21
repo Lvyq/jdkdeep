@@ -4,6 +4,7 @@
 package org.stathry.jdkdeep.collection;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +14,31 @@ import org.junit.Test;
  * @date 2017年6月6日
  */
 public class ArrayTest {
-	
+
+    // 当使用基本类型的数组作为可变参数时，传入的数组并未匹配可变参数方法的数组
+    // 当使用包装类型的数组作为可变参数时，传入的数组匹配可变参数方法的数组
+    @Test
+    public void testIntArrayAsList() {
+        int[] a = {1, 3, 5};
+        List<int[]> list = Arrays.asList(a);
+        System.out.println(list);
+        Assert.assertTrue(list != null && list.size() == 1);
+        Assert.assertTrue(list.get(0).equals(a));
+
+        Integer[] a2 = {1, 3, 5};
+        List<Integer> list2 = Arrays.asList(a2);
+        System.out.println(list2);
+        Assert.assertTrue(list2 != null && list2.size() == 3);
+    }
+
+    @Test
+    public void testArrayAsList() {
+        List<String> list = Arrays.asList();
+        Assert.assertTrue(list != null && list.size() == 0);
+        List<String> list2 = Arrays.asList("a", "x");
+        Assert.assertTrue(list2 != null && list2.size() == 2);
+    }
+
 	@Test
 	public void testArrayCopy() {
 		Integer[] a1 = new Integer[]{1,2,3};

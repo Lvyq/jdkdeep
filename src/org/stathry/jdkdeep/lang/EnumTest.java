@@ -23,11 +23,41 @@ public class EnumTest {
         Assert.assertEquals(4, Opt.values().length);
 
         Set<Opt> opts1 = new HashSet<>(Arrays.asList(Opt.ADD, Opt.SUB));
-        Set<Opt> opts2 = EnumSet.of(Opt.ADD, Opt.SUB);
+        EnumSet<Opt> opts2 = EnumSet.of(Opt.ADD, Opt.SUB);
         Assert.assertEquals(opts1, opts2);
         opts2.add(Opt.DIV);
         Assert.assertEquals(3, opts2.size());
 //        Set<Opt> opts3 = Collections.unmodifiableSet(opts2);
 //        opts3.add(Opt.MUL);
+    }
+
+    @Test
+    public void testEnumMapVsHashMap() {
+        int times = 1000_10000;
+        Opt[] es = Opt.values();
+        EnumMap<Opt, String> eMap = new EnumMap(Opt.class);
+        HashMap<Opt, String> hMap = new HashMap<>();
+        for (int i = 0; i < es.length; i++) {
+            eMap.put(es[i], "v" + i);
+            hMap.put(es[i], "v" + i);
+        }
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < times; i++) {
+            for (Opt e : es) {
+                eMap.get(e);
+            }
+        }
+        long t1 = System.currentTimeMillis() - start;
+        System.out.println("times " + times + ", EnumMap cost ms " + t1);
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < times; i++) {
+            for (Opt e : es) {
+                hMap.get(e);
+            }
+        }
+        long t2 = System.currentTimeMillis() - start;
+        System.out.println("times " + times + ", HashMap cost ms " + t2);
+        System.out.println("times " + times + ", t2 : t1 = " + (t2 * 1.0 / t1));
     }
 }
