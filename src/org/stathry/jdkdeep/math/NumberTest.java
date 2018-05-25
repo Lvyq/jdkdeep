@@ -23,6 +23,33 @@ import org.stathry.jdkdeep.util.DecimalUtils;
  */
 public class NumberTest {
 
+    // Infinite表示无穷, finite表示有穷|有限
+    @Test
+    public void testNumRange() {
+        double d = Math.sqrt(-2);
+        System.out.println(d);
+        Assert.assertTrue(Double.isNaN(d));
+        // NaN与任何数字都不相等,NaN != NaN
+        Assert.assertFalse(Double.NaN == d);
+        Assert.assertFalse(Double.NaN == Double.NaN);
+
+        float f = (float) d;
+        Assert.assertTrue(Float.isNaN(f));
+
+        double inf = 1.0 / 0.0;
+        System.out.println(inf);
+        System.out.println(Double.isInfinite(inf));
+        Assert.assertTrue(Double.isInfinite(inf));
+
+        double fin = -1.0 / 0.0;
+        System.out.println(fin);
+        System.out.println(Double.isInfinite(fin));
+
+        Assert.assertTrue(Double.isFinite(0));
+        Assert.assertTrue(Double.isFinite('0'));
+        Assert.assertTrue(Double.isFinite(100));
+    }
+
 	@Test
 	public void testDataFormat() {
 //		DataFormatUtils c = new DataFormatUtils("yyyyMMdd", 20, 2, RoundingMode.HALF_UP);
