@@ -29,6 +29,9 @@ public class TestErrors {
         System.out.println(formatter.parse("2018-05-22 17:01"));
     }
 
+    // 对于即使修改代码也无法避免的异常，要用CheckEx
+    // 对于编程错误要用RuntimeEx，可以通过修改代码来避免
+    @Test
     public void testExTypeRuntime1() {
         // RuntimeException 无需捕获或声明抛出
         throwRuntimeEx1();
@@ -136,10 +139,14 @@ public class TestErrors {
     }
 
     private static class CustRuntimeException extends RuntimeException {
-
+        public CustRuntimeException() {
+            super();
+        }
     }
 
     private static class CustCheckedException extends Exception {
-
+        public CustCheckedException() {
+            super();
+        }
     }
 }

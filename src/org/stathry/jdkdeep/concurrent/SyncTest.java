@@ -11,7 +11,7 @@ import org.junit.Test;
  */
 public class SyncTest {
 	
-	@Test
+	@Test(expected = NullPointerException.class)
 	public void test1() {
 		try {
 			sync1(null);
@@ -25,5 +25,18 @@ public class SyncTest {
 			System.out.println(o);
 		}
 	}
+
+	static class SyncImpl extends AbstractSync {
+
+        @Override
+        protected void m() {
+
+        }
+
+        @Override
+        protected void m1() {
+
+        }
+    }
 
 }

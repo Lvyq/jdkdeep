@@ -20,7 +20,7 @@ public class LocalDatetimeTest {
 		System.out.println(now);
 		System.out.println(now.toLocalDate());
 		System.out.println(now.toLocalTime());
-		System.out.println(now.format(DateTimeFormatter.ofPattern("yyyyMMdd 00:00:00.000")));
+		System.out.println(now.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss.SSS")));
 	}
 	
 	@Test

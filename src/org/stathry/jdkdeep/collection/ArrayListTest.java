@@ -80,6 +80,18 @@ public class ArrayListTest {
     }
 
     @Test
+    public void testNewFinalSet() {
+        Set<Integer> set = new HashSet(Arrays.asList(2, 4, 6));
+    }
+
+    @Test
+    public void testOfFinalCollection() {
+        Map<Integer, String> map = Map.of(1, "a", 2, "b", 3, "c");
+        List<Integer> list = List.of(2, 3, 4);
+        Set<Integer> set = Set.of(3, 4, 5);
+    }
+
+    @Test
     public void testGenericList() {
         List<Object> list1 = new ArrayList<>();
         list1.add(new ArrayList<String>());

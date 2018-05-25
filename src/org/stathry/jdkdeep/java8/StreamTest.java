@@ -4,13 +4,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.BinaryOperator;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -153,5 +156,74 @@ public class StreamTest {
 		assertFalse(a.stream().allMatch((e) -> e % 2 == 0));
 		assertTrue(a.stream().noneMatch((e) -> e > 12));
 	}
+
+    @Test
+    public void testAvg() {
+	    int size = 5;
+	    List<Integer> list = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            list.add(i);
+        }
+        double avg1 = list.stream().mapToInt(n -> n).average().getAsDouble();
+        System.out.println(avg1);
+    }
+
+    @Test
+    public void testAvgStreamVSNormal() {
+	    boolean parallel = false;
+        int size = 100_0000;
+        List<Integer> data;
+	    int testTimes = 10;
+        List<Long> streamTimes = new ArrayList<>(testTimes);
+        List<Double> streamRs = new ArrayList<>(testTimes);
+        long start, end;
+        double avg;
+        for (int i = 0; i < testTimes; i++) {
+            data = randomData(size);
+            start = System.currentTimeMillis();
+            avg = parallel ? data.parallelStream().mapToInt(n -> n).average().getAsDouble() :
+                    data.stream().mapToInt(n -> n).average().getAsDouble();
+            end = System.currentTimeMillis();
+            streamRs.add(avg);
+            streamTimes.add(end - start);
+        }
+
+        System.out.println("testAvgStream:parallel:" + parallel);
+        System.out.println(streamRs);
+        System.out.println(streamTimes);
+        System.out.println(streamTimes.parallelStream().mapToLong(n -> n).average().getAsDouble());
+
+        List<Long> nTimes = new ArrayList<>(testTimes);
+        List<Double> nRs = new ArrayList<>(testTimes);
+        int sum1;
+        long sum2 = 0,tmp;
+        for (int i = 0; i < testTimes; i++) {
+            data = randomData(size);
+            sum1 = 0;
+            start = System.currentTimeMillis();
+            for (int j = 0; j < size; j++) {
+                sum1 += data.get(j);
+            }
+            avg = sum1 * 1.0 / size;
+            end = System.currentTimeMillis();
+            nRs.add(avg);
+            tmp = end - start;
+            sum2 += tmp;
+            nTimes.add(tmp);
+        }
+        System.out.println("testAvgNormal:");
+        System.out.println(nRs);
+        System.out.println(nTimes);
+        System.out.println(sum2 / testTimes);
+    }
+
+    private List<Integer> randomData(int size) {
+        SecureRandom random = new SecureRandom();
+        List<Integer> data = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            data.add(random.nextInt(10));
+        }
+        return data;
+    }
 
 }
