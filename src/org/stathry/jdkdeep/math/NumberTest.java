@@ -23,6 +23,22 @@ import org.stathry.jdkdeep.util.DecimalUtils;
  */
 public class NumberTest {
 
+    @Test
+    public void testDoubleRange() {
+        System.out.println(Double.MAX_VALUE);
+        System.out.println(Double.MIN_VALUE);
+        DecimalFormat f = new DecimalFormat();
+        f.setGroupingUsed(false);
+        f.setParseIntegerOnly(true);
+        System.out.println(f.format(Double.MAX_VALUE));
+        double d1 = Math.pow(10, 308);
+        System.out.println(f.format(d1));
+        double d2 = Math.pow(10, 309);
+        System.out.println(f.format(d2));
+        Assert.assertTrue(Double.MAX_VALUE > Math.pow(10, 308));
+        Assert.assertTrue(Double.MAX_VALUE < Math.pow(10, 309));
+    }
+
     // Infinite表示无穷, finite表示有穷|有限
     @Test
     public void testNumRange() {

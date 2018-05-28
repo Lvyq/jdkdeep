@@ -3,21 +3,52 @@
  */
 package org.stathry.jdkdeep.math;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.nio.channels.SelectionKey;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author dongdaiming@free.com
  */
 public class MathTest {
+
+    @Test
+    public void testCastNum() {
+        // 小转大无精度丢失问题，无需强制转换
+        short s = 1;
+        int i = s;
+        long l = i;
+        // 大转小因为有精度丢失问题，所以需要转换强制转换
+//        short s2 = i;
+//        int i2 = l;
+    }
+
+    @Test
+    public void testCastShort() {
+        Short s0 = (1 == 1) ? 1 : 2;
+        short s1 = (1 == 1) ? 1 : 2;
+        short s2 = 3;
+        short s3 = 1;
+        // 大转小需要强转
+//        s3 = s1 + 1;
+        short s4 = 1;
+        // +=自动做了转换
+        s4 += 1;
+        long i = 1 + s1;
+    }
+
+    @Test
+    public void testDiv() {
+        System.out.println(1/2);
+        System.out.println(1.0/2);
+        System.out.println(1/2.0);
+    }
 
 	@Test
 	public void testMove() {
