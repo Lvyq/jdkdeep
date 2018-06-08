@@ -3,18 +3,99 @@
  */
 package org.stathry.jdkdeep.collection;
 
-import java.util.*;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author stathry@126.com
  * @date 2017年6月6日
  */
 public class ArrayListTest {
+
+    @Test
+    public void testRemoveIntOrInteger() {
+        List<Integer> list1 = new ArrayList<>(List.of(2, 4, 6));
+        list1.remove(2);
+        System.out.println(list1);
+        assertEquals(2, list1.size());
+        assertEquals(2, list1.get(0).intValue());
+        assertEquals(4, list1.get(1).intValue());
+
+        List<Integer> list2 = new ArrayList<>(List.of(2, 4, 6));
+        list2.remove(Integer.valueOf(2));
+        System.out.println(list2);
+        assertEquals(2, list2.size());
+        assertEquals(4, list2.get(0).intValue());
+        assertEquals(6, list2.get(1).intValue());
+    }
+
+//    limit:10000_0000
+//    testTraverse fori:141
+//    testTraverse forEach:391
+//    testTraverse forIterator:310
+    @Test
+    public void testTraverse() {
+        int limit = 10000_0000;
+        List<Integer> list = new ArrayList<>(limit);
+        for (int i = 0; i < limit; i++) {
+            list.add(i);
+        }
+
+        System.out.println("limit:" + limit);
+
+        long begin = System.currentTimeMillis();
+        for (int i = 0; i < limit; i++) {
+            list.get(i);
+        }
+        System.out.println("testTraverse fori:" + (System.currentTimeMillis() - begin));
+
+        begin = System.currentTimeMillis();
+        Integer n;
+        for (Integer i : list) {
+            n = i;
+        }
+        System.out.println("testTraverse forEach:" + (System.currentTimeMillis() - begin));
+
+        begin = System.currentTimeMillis();
+        Iterator<Integer> it = list.iterator();
+        for (; it.hasNext(); ) {
+            n = it.next();
+        }
+        System.out.println("testTraverse forIterator:" + (System.currentTimeMillis() - begin));
+    }
+
+    @Test
+    public void testArrInsert() {
+        List<String> list = new ArrayList<>(List.of("a", "b", "c"));
+        System.out.println(list);
+        list.add(1, "x");
+        System.out.println(list);
+
+        // 模拟a[1]处插入'i'
+        char[] a = new char[]{'x', 'y', 'z'};
+        char[] t = new char[a.length + 1];
+        int i = 1;
+        System.arraycopy(a, 0, t, 0, a.length);
+        a = t;
+        System.out.println(Arrays.toString(a));
+        System.arraycopy(a, i, a, i + 1, a.length - i - 1);
+        a[i] = 'i';
+        System.out.println(String.valueOf(a));
+        System.out.println(String.valueOf(a).equals("xiyz"));
+    }
 
     @Test
     public void testAddNum() {
@@ -24,7 +105,7 @@ public class ArrayListTest {
         Set<Number> set = new HashSet<>(Arrays.asList(3, 4, 3));
         list.addAll(set);
 		System.out.println(list);
-		Assert.assertEquals(6, list.size());
+		assertEquals(6, list.size());
     }
 
     @Test(expected = ArrayStoreException.class)
@@ -64,7 +145,7 @@ public class ArrayListTest {
 
 		list1.retainAll(list2);
 		System.out.println(list1);
-		Assert.assertEquals(3, list1.size());
+		assertEquals(3, list1.size());
     }
 
     @Test
@@ -76,7 +157,7 @@ public class ArrayListTest {
 		list1.retainAll(list2);
 		System.out.println(list1);
 		// ? 3
-		Assert.assertEquals(2, list1.size());
+		assertEquals(2, list1.size());
     }
 
     @Test

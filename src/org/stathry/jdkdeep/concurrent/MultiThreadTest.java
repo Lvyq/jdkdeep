@@ -42,5 +42,14 @@ public class MultiThreadTest {
 		exec.shutdown();
 		exec.awaitTermination(3, TimeUnit.MINUTES);
 	}
+
+	@Test
+    public void testPrintCurMethod() {
+        System.out.println(Thread.currentThread().getStackTrace()[0]);
+        System.out.println(Thread.currentThread().getStackTrace()[0].getMethodName());
+
+        System.out.println(Thread.currentThread().getStackTrace()[1]);
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+    }
 	
 }

@@ -4,7 +4,13 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -13,9 +19,47 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author dongdaiming
  * @date 2018/5/17
  */
-public class TestErrors {
+public class ErrorTest {
 
     private int stackDeep = 1;
+
+    // ExceptionInInitializerError
+//    private static int n = newErrorN();
+
+    @Test
+    public void testOOMHeap1() {
+    // java.lang.OutOfMemoryError: Java heap space
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < Integer.MAX_VALUE ; i++) {
+            map.put(i, i);
+        }
+    }
+
+    @Test
+    public void testOOMHeap2() {
+        List<ExecutorService> list  = new ArrayList<>(10000_0000);
+    // java.lang.OutOfMemoryError: Java heap space
+        for (int i = 0; i < Integer.MAX_VALUE ; i++) {
+            list.add(Executors.newFixedThreadPool(10));
+        }
+    }
+
+    private static int newErrorN() {
+        if(true) {
+        throw new NullPointerException();
+        }
+        return 0;
+    }
+
+    @Test(expected = InstantiationException.class)
+    public void testConstructorError() throws IllegalAccessException, InstantiationException {
+        ConStructorError.class.newInstance();
+    }
+
+    @Test
+    public void testExceptionInInitializerError() {
+//        System.out.println(n);
+    }
 
     @Test(expected = ParseException.class)
     public void testExTypeCheck1() throws ParseException {
@@ -128,6 +172,13 @@ public class TestErrors {
                 }
             }
 
+        }
+    }
+
+    private static abstract class ConStructorError {
+
+        public ConStructorError() {
+            throw new IllegalStateException();
         }
     }
 

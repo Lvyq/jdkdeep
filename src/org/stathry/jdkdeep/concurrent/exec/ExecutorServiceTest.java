@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
@@ -125,9 +126,9 @@ public class ExecutorServiceTest {
 	@Test
 	public void testSubmitCall() throws InterruptedException, ExecutionException {
 		ExecutorService exec = new ThreadPoolExecutor(10, 1000, 60,
-                TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(),
+                TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2000),
 				Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
-		List<Future<?>> futures = new ArrayList<>(5); 
+		List<Future<Integer>> futures = new ArrayList<>(5);
 		for(int i = 0; i < 5; i++) {
 			final int n = i;
 			futures.add(exec.submit(new Callable<Integer>() {
@@ -140,8 +141,35 @@ public class ExecutorServiceTest {
 		}
 		exec.shutdown();
 		exec.awaitTermination(60, TimeUnit.SECONDS);
-		for (Future<?> future : futures) {
-			System.out.println(future + "___" + future.get());
+//        System.out.println(futures.size());
+		for (Future<Integer> future : futures) {
+			System.out.println(future.get());
+		}
+	}
+
+	@Test
+	public void testCancelTask() throws InterruptedException, ExecutionException {
+		ExecutorService exec = new ThreadPoolExecutor(10, 1000, 60,
+                TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2000),
+				Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+		List<Future<Integer>> futures = new ArrayList<>(5);
+		for(int i = 0; i < 5; i++) {
+			final int n = i;
+			futures.add(exec.submit(new Callable<Integer>() {
+
+				@Override
+				public Integer call() throws Exception {
+				    Thread.sleep(1000);
+					return (int) Math.pow(n, 2);
+				}
+			}));
+		}
+        futures.get(futures.size() - 1).cancel(false);
+		exec.shutdown();
+		exec.awaitTermination(3, TimeUnit.MINUTES);
+        System.out.println("futures.size:" + futures.size());
+		for (Future<Integer> future : futures) {
+			System.out.println("future isCancel:" + future.isCancelled() + ", result:" + (future.isCancelled() ? 0 : future.get()));
 		}
 	}
 

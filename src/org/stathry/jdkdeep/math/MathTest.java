@@ -20,10 +20,12 @@ public class MathTest {
 
     @Test
     public void testCastNum() {
-        // 小转大无精度丢失问题，无需强制转换
+        // 小转大非浮点数无精度丢失问题(浮点数可能会有精度丢失问题)，无需强制转换
         short s = 1;
         int i = s;
         long l = i;
+        double d = 1L;
+        float f = s;
         // 大转小因为有精度丢失问题，所以需要转换强制转换
 //        short s2 = i;
 //        int i2 = l;
@@ -37,6 +39,7 @@ public class MathTest {
         short s3 = 1;
         // 大转小需要强转
 //        s3 = s1 + 1;
+        s3 = (short)(s1 + 1);
         short s4 = 1;
         // +=自动做了转换
         s4 += 1;
@@ -76,11 +79,13 @@ public class MathTest {
 
 	}
 	@Test
-	public void testround() {
+	public void testRound() {
 		System.out.println(Math.round(11.49));// 11
 		System.out.println(Math.round(11.5));// 12
 		System.out.println(Math.round(-11.51));// -12
 		System.out.println(Math.round(-11.5));//-11
+        int n1 = (int) Math.round(-11.5);
+        System.out.println(n1);
 	}
 	
 	@Test

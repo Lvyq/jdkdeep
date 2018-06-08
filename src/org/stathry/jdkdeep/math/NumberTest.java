@@ -24,6 +24,12 @@ import org.stathry.jdkdeep.util.DecimalUtils;
 public class NumberTest {
 
     @Test
+    public void testShortRange() {
+        System.out.println(Short.MAX_VALUE);
+        System.out.println(Integer.MAX_VALUE);
+    }
+
+    @Test
     public void testDoubleRange() {
         System.out.println(Double.MAX_VALUE);
         System.out.println(Double.MIN_VALUE);

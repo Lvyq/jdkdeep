@@ -15,6 +15,11 @@ import org.junit.Test;
  */
 public class SystemTest {
 
+    @Test
+    public void testSecurityManager() {
+        System.out.println(System.getSecurityManager());
+    }
+
 	@Test
 	public void testProps() {
 		Properties props = System.getProperties();

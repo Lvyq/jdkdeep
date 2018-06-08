@@ -3,22 +3,104 @@
  */
 package org.stathry.jdkdeep.lang;
 
-import static org.junit.Assert.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author stathry@126.com
  * @date 2017年6月8日
  */
 public class StringTest {
+
+        @Test
+    public void testStartWith() {
+        String start = "axbc";
+        String s = "abcdef";
+        System.out.println(s.startsWith(start));
+
+        char[] a = start.toCharArray();
+        boolean startWith = true;
+        for (int i = 0; i < a.length ; i++) {
+            if(s.charAt(i) != a[i]) {
+                startWith = false;
+                break;
+            }
+        }
+        System.out.println(startWith);
+    }
+
+    @Test
+    public void testSplit() {
+        String reg = "[;|,|:]";
+        String s = "a;b,c:d";
+        String[] a = s.split(reg);
+        System.out.println(Arrays.toString(a));
+
+        StringTokenizer st = new StringTokenizer(s, reg);
+        for (; st.hasMoreTokens() ; ) {
+            System.out.println(st.nextToken());
+        }
+    }
+
+    @Test
+    public void testSubStrOOM() {
+        // jdk7以下会出现堆内存溢出
+        String s = "limit 10000000, sep A, split by String.split time vs StringTokenizer = 1.0292682926829269";
+        int limit = 1000_0000;
+        List<String> list = new ArrayList<>(limit);
+        for (int i = 0; i < limit ; i++) {
+            list.add(s.substring(10));
+        }
+    }
+
+
+    //    limit 1000000, sep ',', split by String.split time vs StringTokenizer = 1.2011331444759208
+//     limit 1000000, sep AA, split by String.split time vs StringTokenizer = 1.298342541436464
+//     limit 1000000, sep A, split by String.split time vs StringTokenizer = 0.9188405797101449
+//     limit 10000000, sep AA, split by String.split time vs StringTokenizer = 1.1305073431241655
+//    limit 10000000, sep A, split by String.split time vs StringTokenizer = 1.0292682926829269
+    @Test
+    public void testStringTokenizerVSSplit() {
+        String sep = ",";
+//        String sep = "AA";
+//        String sep = "A";
+        int limit = 100_0000;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < limit; i++) {
+            builder.append(i).append(sep);
+        }
+        String str = builder.toString();
+        List<String> list1 = new ArrayList<>(limit);
+
+        long start = System.currentTimeMillis();
+        StringTokenizer tokenizer = new StringTokenizer(str, sep);
+        while (tokenizer.hasMoreTokens()) {
+            list1.add(tokenizer.nextToken());
+        }
+        long time1 = System.currentTimeMillis() - start;
+        System.out.println("limit " + limit + ", split by StringTokenizer, time " + time1);
+        start = System.currentTimeMillis();
+        List<String> list2 = Arrays.asList(str.split(sep));
+        long time2 = System.currentTimeMillis() - start;
+        System.out.println("limit " + limit + ", split by String.split, time " + time2);
+        System.out.println();
+        System.out.println();
+        System.out.println("limit " + limit + ", sep '" + sep + "', split by String.split time vs StringTokenizer = " + time2 * 1.0 / time1);
+//        System.out.println();
+//        System.out.println(list2);
+    }
 
 	@Test
 	public void trimJson() {
