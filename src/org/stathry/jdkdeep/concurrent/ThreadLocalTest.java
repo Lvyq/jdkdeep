@@ -18,7 +18,7 @@ public class ThreadLocalTest {
 
     private static class LocalManager {
 
-        private static final ThreadLocal<Long> time = new ThreadLocal<>() {
+        private static final ThreadLocal<Long> time = new ThreadLocal<Long>() {
 
             @Override
             protected Long initialValue() {

@@ -29,6 +29,9 @@ public class EnumTest {
         Assert.assertEquals(3, opts2.size());
 //        Set<Opt> opts3 = Collections.unmodifiableSet(opts2);
 //        opts3.add(Opt.MUL);
+
+        EnumSet<Opt> opts3 = EnumSet.allOf(Opt.class);
+        Assert.assertEquals(4, opts3.size());
     }
 
     @Test
