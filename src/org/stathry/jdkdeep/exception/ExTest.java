@@ -11,6 +11,24 @@ public class ExTest {
     private static final int limit1 = 10000_0000;
 
     @Test
+    public void testFinallyReturn() {
+        System.out.println(fm(1, 0));
+        System.out.println(fm(12, 2));
+    }
+
+    private int fm(int n1, int n2) {
+        int n = 0;
+        try {
+           return n = n1 / n2;
+        } catch (Exception e) {
+            throw e;
+        }
+        finally {
+            return 1;
+        }
+    }
+
+    @Test
     public void testTryCatch() {
         long begin = System.currentTimeMillis();
         int n = 0;

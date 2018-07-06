@@ -7,10 +7,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
@@ -23,6 +25,15 @@ import static org.junit.Assert.assertTrue;
  * @date 2017年6月8日
  */
 public class StringTest {
+
+    //Collator可以满足常见的非英文字符排序，严格的排序建议使用pinyin4j
+    @Test
+    public void testCNSort() {
+        String[] a = new String[]{"黑帆H", "拿骚N", "骷髅K"};//HKN
+//        String[] a = new String[]{"张三Z", "李四L", "王五W"}; //LWZ
+        Arrays.sort(a, Collator.getInstance(Locale.CHINA));
+        System.out.println(Arrays.toString(a));
+    }
 
         @Test
     public void testStartWith() {

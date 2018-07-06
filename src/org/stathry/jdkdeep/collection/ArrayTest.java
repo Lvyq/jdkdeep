@@ -15,6 +15,16 @@ import org.junit.Test;
  */
 public class ArrayTest {
 
+    @Test
+    public void testArrayType() {
+        int[] a1 = {2, 4, 6};
+        Object[] a2 = {new Object(), new Object()};
+        long[] a3 = {5L, 4L, 6L};
+        Assert.assertEquals("[I", a1.getClass().getName());
+        Assert.assertEquals("[Ljava.lang.Object;", a2.getClass().getName());
+        Assert.assertEquals("[J", a3.getClass().getName());
+    }
+
     // 当使用基本类型的数组作为可变参数时，传入的数组并未匹配可变参数方法的数组
     // 当使用包装类型的数组作为可变参数时，传入的数组匹配可变参数方法的数组
     @Test

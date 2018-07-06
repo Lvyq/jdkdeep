@@ -12,6 +12,34 @@ import java.util.concurrent.TimeUnit;
  */
 public class StopThreadTest {
 
+    @Test
+    public void testOccurEXRestartThread() throws InterruptedException {
+        Thread t = new Thread(new Task());
+        t.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println("t " + t + " caught exception " + e);
+                Thread nt = new Thread(new Task());
+                nt.setUncaughtExceptionHandler(this);
+                nt.start();
+            }
+
+        });
+        t.start();
+        Thread.sleep(60000);
+    }
+
+    private static class Task implements Runnable {
+
+        @Override
+        public void run() {
+            for (int i = -5; i < 5; i++) {
+                System.out.println(1 / i);
+            }
+        }
+    }
+
     private static boolean stop = false;
     @Test
     public void testStopThread() throws InterruptedException {

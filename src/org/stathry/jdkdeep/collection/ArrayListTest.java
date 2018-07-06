@@ -25,6 +25,23 @@ import static org.junit.Assert.assertEquals;
  */
 public class ArrayListTest {
 
+    // 删除list的指定区间的元素可以使用subList(f, t).clear()
+    @Test
+    public void testRemoveRange() {
+        List<Integer> list1 = new ArrayList<>(10);
+        List<Integer> list2 = new ArrayList<>(10);
+        for (int i = 1; i <= 10 ; i++) {
+            list1.add(i);
+            list2.add(i);
+        }
+        for (int i = 0, j = 3; i < 3 ; i++) {
+            list1.remove(j);
+        }
+        System.out.println(list1);
+        list2.subList(3, 6).clear();
+        System.out.println(list2);
+    }
+
     @Test
     public void testRemoveIntOrInteger() {
         List<Integer> list1 = new ArrayList<>(List.of(2, 4, 6));
@@ -42,10 +59,11 @@ public class ArrayListTest {
         assertEquals(6, list2.get(1).intValue());
     }
 
-//    limit:10000_0000
-//    testTraverse fori:141
-//    testTraverse forEach:391
-//    testTraverse forIterator:310
+
+//    limit:100000000
+//    testTraverse fori:434
+//    testTraverse forEach:271
+//    testTraverse forIterator:247
     @Test
     public void testTraverse() {
         int limit = 10000_0000;
@@ -54,16 +72,16 @@ public class ArrayListTest {
             list.add(i);
         }
 
+        Integer n = 0;
         System.out.println("limit:" + limit);
 
         long begin = System.currentTimeMillis();
         for (int i = 0; i < limit; i++) {
-            list.get(i);
+            n = list.get(i);
         }
         System.out.println("testTraverse fori:" + (System.currentTimeMillis() - begin));
 
         begin = System.currentTimeMillis();
-        Integer n;
         for (Integer i : list) {
             n = i;
         }
