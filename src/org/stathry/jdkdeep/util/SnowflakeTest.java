@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -20,9 +19,14 @@ public class SnowflakeTest {
     @Test
     public void testGenIdSingle() {
         System.out.println(IPUtils.getHostFlagQuietly());
-        long dataCenterId = IPUtils.getHostFlagQuietly() % 30;
+        long dataCenterId = IPUtils.getHostFlagQuietly() % 31;
         System.out.println(dataCenterId);
         Snowflake snowflake = new Snowflake(dataCenterId, 1);
+
+        System.out.println(snowflake.nextId());
+        System.out.println("idLength:" + String.valueOf(snowflake.nextId()).length());
+        Assert.isTrue(String.valueOf(snowflake.nextId()).length() == 18);
+
         long begin = System.currentTimeMillis();
         Long id;
         int limit = 100_0000;
@@ -39,7 +43,7 @@ public class SnowflakeTest {
 
     @Test
     public void testGenIdConcurrent() throws InterruptedException {
-        long dataCenterId = IPUtils.getHostFlagQuietly() % 30;
+        long dataCenterId = IPUtils.getHostFlagQuietly() % 31;
         Snowflake snowflake = new Snowflake(dataCenterId, 1);
         int tn = 8;
         int limit = 100_0000;

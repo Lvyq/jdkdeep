@@ -3,6 +3,8 @@
  */
 package org.stathry.jdkdeep.lang.genericoverride;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,8 +15,19 @@ import org.junit.Test;
 /**
  * @author dongdaiming
  * @date 2018年1月17日
+ * @see SimpleDateFormat (类注释中含格式)
+ * @see <p><a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html"></a></p>
  */
 public class DateTest {
+
+    @Test
+    public void testComplex() throws ParseException {
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        System.out.println(fmt.format(new Date()));
+
+        String s = "2014-01-28T00:00:00.000+08";
+        System.out.println(fmt.parse(s).toLocaleString());
+    }
 
 //	Date类重写了生成hash码的方法，以系统时间为参照生成当前对象的hash码
 	@SuppressWarnings("all")
