@@ -26,4 +26,5 @@ public class HelloB extends HelloA {
         System.out.println("main end.");
     }
 
+
 }

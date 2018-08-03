@@ -24,6 +24,18 @@ import org.stathry.jdkdeep.util.DecimalUtils;
 public class NumberTest {
 
     @Test
+    public void testDoubleFormatToInt() {
+        System.out.println(String.format("%.0f", 1.54));
+        System.out.println(Math.round(1.54));
+    }
+
+    @Test
+    public void testStringFormat() {
+        Double d = 0.1181;
+        System.out.println(String.format("%.2f", d));
+    }
+
+    @Test
     public void testShortRange() {
         System.out.println(Short.MAX_VALUE);
         System.out.println(Integer.MAX_VALUE);

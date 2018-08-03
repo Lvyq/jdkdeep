@@ -25,6 +25,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class ArrayListTest {
 
+    // 删除list中不存在的元素
+    @Test
+    public void testRemovNotExists() {
+        List<Integer> list1 = new ArrayList<>(10);
+        list1.remove(new Object());
+    }
+
     // 删除list的指定区间的元素可以使用subList(f, t).clear()
     @Test
     public void testRemoveRange() {

@@ -25,4 +25,9 @@ public class HelloA {
 
 	}
 
+	// 静态方法无法被覆盖
+    public static void m2() {
+
+    }
+
 }
