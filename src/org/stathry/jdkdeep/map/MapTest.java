@@ -2,7 +2,9 @@ package org.stathry.jdkdeep.map;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.stathry.jdkdeep.util.MapUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,22 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class MapTest {
+
+    @Test
+    public void testMapSub() {
+        Map<Integer, Integer> map = new TreeMap<>();
+        map.put(1, 11);
+        map.put(2, 22);
+        map.put(3, 33);
+        map.put(4, 44);
+        Map<Integer, Integer> map2 = new TreeMap<>();
+        map2.put(1, 11);
+        map2.put(2, 22);
+        map2.put(33, 333);
+        MapUtils.retainAll(map, map2);
+        System.out.println(map);
+        Assert.assertEquals(2, map.size());
+    }
 
     // 一般HashMap性能比TreeMap高，但Hash冲突严重时可能TreeMap更合适
     //    limit:1000000

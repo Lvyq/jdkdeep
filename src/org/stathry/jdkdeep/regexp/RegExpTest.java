@@ -1,5 +1,6 @@
 package org.stathry.jdkdeep.regexp;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -24,6 +26,22 @@ public class RegExpTest {
     private static final int LIMIT = 1000000;
     private static final String ARR = "ABC,DEF,XYZ";
     private static final char SEP = ',';
+
+    @Test
+    public void testGroup() {
+        // group分组是按括号内正则分组，如果匹配成功，则group(0)返回整个匹配的字符串，group(1)返回第一个括号匹配的字符串，group(2)以此类推
+        String reg = "(\\d+)天内有(\\d+)天无通话记录";
+        String in = "180天内有116天无通话记录";
+        Matcher m = Pattern.compile(reg).matcher(in);
+        if(m.find()) {
+            System.out.println(m.group(0));
+            System.out.println(m.group(1));
+            System.out.println(m.group(2));
+            Assert.assertEquals(in, m.group(0));
+            Assert.assertEquals("180", m.group(1));
+            Assert.assertEquals("116", m.group(2));
+        }
+    }
 
     // 2026,2101,2031
     @Test

@@ -23,6 +23,11 @@ import org.junit.Test;
 public class DateTest {
 
     @Test
+    public void testTimeUnitConvert() {
+        System.out.println(TimeUnit.valueOf(TimeUnit.MINUTES.name()));
+    }
+
+    @Test
     public void testGetIntervalOfMonth1() throws ParseException {
         Assert.assertEquals(1, getMon("2018-07-30T00:00:00.000+08", "2018-08-30T00:00:00.000+08"));
         Assert.assertEquals(1, getMon("2018-07-30T00:00:00.000+08", "2018-08-01T00:00:00.000+08"));

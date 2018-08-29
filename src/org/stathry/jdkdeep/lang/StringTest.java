@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +26,13 @@ import static org.junit.Assert.assertTrue;
  * @date 2017年6月8日
  */
 public class StringTest {
+
+    @Test
+    public void testBase64() {
+        String s = Base64.getEncoder().encodeToString("拿骚N".getBytes());
+        System.out.println(s);
+        System.out.println(new String(Base64.getDecoder().decode(s)));
+    }
 
     //Collator可以满足常见的非英文字符排序，严格的排序建议使用pinyin4j
     @Test
