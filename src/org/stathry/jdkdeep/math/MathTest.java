@@ -3,6 +3,7 @@
  */
 package org.stathry.jdkdeep.math;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -17,6 +18,19 @@ import static org.junit.Assert.assertEquals;
  * @author dongdaiming@free.com
  */
 public class MathTest {
+
+    @Test(expected = ArithmeticException.class)
+    public void testDivide0(){
+        System.out.println(0/0);
+    }
+
+    @Test
+    public void testDivide00(){
+        System.out.println(0.0/0.0);
+        System.out.println(0/0.0);
+        Assert.assertEquals(Double.NaN, 0.0/0.0, 0.0);
+        Assert.assertEquals(Double.NaN, 0.0/0.0, 0.0);
+    }
 
     @Test
     public void testCastNum() {

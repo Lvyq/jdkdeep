@@ -1,10 +1,8 @@
 package org.stathry.jdkdeep.util;
 
-import org.junit.Test;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.MessageFormat;
+import java.security.SecureRandom;
 import java.util.Random;
 
 /**
@@ -13,10 +11,12 @@ import java.util.Random;
  */
 public class IPUtils {
 
-    private IPUtils() {}
+    private IPUtils() {
+    }
 
     /**
      * 获取本机IP
+     *
      * @return
      * @throws UnknownHostException
      */
@@ -26,6 +26,7 @@ public class IPUtils {
 
     /**
      * 获取本机IP末尾
+     *
      * @return
      * @throws UnknownHostException
      */
@@ -36,16 +37,27 @@ public class IPUtils {
 
     /**
      * 获取机器标识
+     *
      * @return
      * @throws UnknownHostException
      */
-    public static int getHostFlagQuietly() {
-        int flag;
+    public static String getCurIpQuietly() {
+        String a = "";
         try {
-            flag = InetAddress.getLocalHost().getHostAddress().hashCode();
-        } catch (UnknownHostException e) {
-            flag = new Random().nextInt();
+            a = InetAddress.getLocalHost().getHostAddress();
+        } catch (Exception e) {
         }
-        return flag;
+        return a;
+    }
+
+    public static int getHostFlagQuietly(int bound) {
+        int a;
+        try {
+            a = InetAddress.getLocalHost().getHostAddress().hashCode();
+            a = Math.abs(a) % bound;
+        } catch (Exception e) {
+            a = new SecureRandom().nextInt(bound);
+        }
+        return a;
     }
 }

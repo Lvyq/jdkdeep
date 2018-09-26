@@ -18,8 +18,8 @@ public class SnowflakeTest {
 
     @Test
     public void testGenIdSingle() {
-        System.out.println(IPUtils.getHostFlagQuietly());
-        long dataCenterId = IPUtils.getHostFlagQuietly() % 31;
+        System.out.println(IPUtils.getCurIpQuietly());
+        long dataCenterId = IPUtils.getHostFlagQuietly(31);
         System.out.println(dataCenterId);
         Snowflake snowflake = new Snowflake(dataCenterId, 1);
 
@@ -43,7 +43,8 @@ public class SnowflakeTest {
 
     @Test
     public void testGenIdConcurrent() throws InterruptedException {
-        long dataCenterId = IPUtils.getHostFlagQuietly() % 31;
+        // 建议通过redis或zk递增id传入
+        long dataCenterId = IPUtils.getHostFlagQuietly(31);
         Snowflake snowflake = new Snowflake(dataCenterId, 1);
         int tn = 8;
         int limit = 100_0000;

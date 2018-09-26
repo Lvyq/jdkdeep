@@ -20,6 +20,20 @@ import org.junit.Test;
 public class RandomTest {
 
     @Test
+    public void testRandomRange() {
+        SecureRandom r = new SecureRandom();
+        int n ;
+        for (int i = 0; i < 100_0000; i++) {
+            n = r.nextInt(31);
+            System.out.println(i + "\t" + n);
+            if(n < 0) {
+                System.out.println("negative number:" + i + "\t" + n);
+                break;
+            }
+        }
+    }
+
+    @Test
     public void testRandomSeed() {
         Random r1 = new Random(888L);
         Random r2 = new Random(888L);
