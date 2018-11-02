@@ -19,6 +19,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class HashMapTest {
 
+    @Test
+    public void testMapHashCode() {
+        Map<String, Integer> map1 = Map.of("a", 1, "b", 666888);
+        Map<String, Integer> map11 = Map.of("a", 11, "b", 666888);
+        Map<String, Integer> map2 = Map.of("b", 666888, "a", 1);
+        System.out.println(map1.hashCode());
+        System.out.println(map2.hashCode());
+        Assert.assertEquals(map1.hashCode(), map2.hashCode());
+        Assert.assertNotEquals(map1.hashCode(), map11.hashCode());
+    }
+
     // 不断往map中put数据,put 10000个时再清空，会发现可用内存是先逐渐减小，然后再逐渐增大(这说明put到map中又被清除的数据被回收了)
 //296796688
 //287191744

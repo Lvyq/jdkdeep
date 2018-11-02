@@ -4,12 +4,67 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MapTest {
+
+    private static final int mapSize = 1000_0000;
+
+    @Test
+    public void testIterator() {
+        Map<Integer, Integer> map = new HashMap<>(mapSize * 2);
+        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+        }
+//        for (Entry<Integer, Integer> e : map.entrySet()) {
+//        }
+    }
+
+    @Test
+    public void testHashMapMemory() {
+        System.out.println("before:");
+        printCurMemory();
+
+        Map<Integer, Integer> map = new HashMap<>(mapSize * 2);
+        for (int i = 0; i < mapSize; i++) {
+            map.put(i, i);
+        }
+
+        System.out.println("after:");
+        printCurMemory();
+    }
+
+    @Test
+    public void testConcurrentHashMapMemory() {
+        System.out.println("before:");
+        printCurMemory();
+
+        Map<Integer, Integer> map = new ConcurrentHashMap<>(mapSize * 2);
+        for (int i = 0; i < mapSize; i++) {
+            map.put(i, i);
+        }
+
+        System.out.println("after:");
+        printCurMemory();
+    }
+
+    private void printCurMemory() {
+        MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
+        MemoryUsage memoryUsage = memoryMXBean.getHeapMemoryUsage(); //椎内存使用情况
+        long totalMemorySize = memoryUsage.getInit(); //初始的总内存
+        long maxMemorySize = memoryUsage.getMax(); //最大可用内存
+        long usedMemorySize = memoryUsage.getUsed(); //已使用的内存
+        System.out.println("TotalMemory:" + totalMemorySize/(1024*1024)+"M");
+        System.out.println("FreeMemory:" + (totalMemorySize-usedMemorySize)/(1024*1024)+"M");
+        System.out.println("MaxMemory:" + maxMemorySize/(1024*1024)+"M");
+        System.out.println("UsedMemory:" + usedMemorySize/(1024*1024)+"M");
+    }
 
     // 一般HashMap性能比TreeMap高，但Hash冲突严重时可能TreeMap更合适
     //    limit:1000000

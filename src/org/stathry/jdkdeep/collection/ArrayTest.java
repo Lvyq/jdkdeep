@@ -3,11 +3,13 @@
  */
 package org.stathry.jdkdeep.collection;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author stathry@126.com
@@ -81,14 +83,27 @@ public class ArrayTest {
     }
 	
 	@Test
-	public void testSystemArrayCopy() {
+	public void testSystemArrayCopy1() {
 		Integer[] a1 = new Integer[]{1,2,3};
 		Object[] a2 = new Object[10];
 		System.arraycopy(a1, 1, a2, 1, 1);
+        System.out.println(Arrays.toString(a2));
 		Assert.assertTrue(a2[0] == null);
 		Assert.assertTrue(((Integer)a2[1]).intValue() == 2);
 		Assert.assertTrue(a2[2] == null);
 	}
+
+    @Test
+    public void testSystemArrayCopy2() {
+        Integer[] a1 = new Integer[]{1,2,3,4};
+        Integer[] a2 = new Integer[]{5,6,7,8};
+        System.arraycopy(a1, 2, a2, 1, 2);
+        System.out.println(Arrays.toString(a2));
+        Assert.assertEquals(5, (int)a2[0]);
+        Assert.assertEquals(3, (int)a2[1]);
+        Assert.assertEquals(4, (int)a2[2]);
+        Assert.assertEquals(8, (int)a2[3]);
+    }
 
 //	@Test
 	public void testToString() {
@@ -99,38 +114,51 @@ public class ArrayTest {
 		Assert.assertEquals(Arrays.toString(a1), "[1, 2, 3]");
 	}
 
+
+
 	@Test
-	public void testForEachArray() {
-		int size = 10000000;
-		Integer[] a = new Integer[size];
-		for (int i = 0; i < size; i++) {
-			a[i] = i;
-		}
-		long start = System.currentTimeMillis();
-		for (Integer e : a) {
-			System.out.println(e);
-		}
-		long time = System.currentTimeMillis() - start;
-		System.out.println("testForEachArray:" + time);
-		//50560		48631
+	public void testForEachVSForI() {
+        int size = 10_0000;
+        List<Long> sizeList = new ArrayList<>(), foreachTimeList = new ArrayList<>(), forTimeList = new ArrayList();
+        for (int i = 0; i <1; i++) {
+
+            for (int j = 0; j < 5; j++) {
+                foreachVSfor(size  * (int)Math.pow(10, i), sizeList, foreachTimeList, forTimeList);
+            }
+        }
+
+        System.out.println("sizeList:" + sizeList);
+        System.out.println("foreachTimeList:" + foreachTimeList);
+        System.out.println("forTimeList:" + forTimeList);
 	}
-	@Test
-	public void testForArray() {
-		int size = 10000000;
-		Integer[] a = new Integer[size];
-		for (int i = 0; i < size; i++) {
-			a[i] = i;
-		}
-		long start = System.currentTimeMillis();
-		for (int i = 0; i < size; i++) {
-			System.out.println(a[i]);
-		}
-		long time = System.currentTimeMillis() - start;
-		System.out.println("testForArray:" + time);
-		// 50106	50481
-	}
-	
-	@Test
+
+    private void foreachVSfor(int size, List<Long> sizeList, List<Long> foreachTimeList, List<Long> forTimeList) {
+        sizeList.add((long)size);
+        List<Integer> list = new LinkedList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(i);
+        }
+
+        StringBuilder b1 = new StringBuilder(size * 10);
+        StringBuilder b2 = new StringBuilder(size * 10);
+        long start = System.currentTimeMillis();
+        for (Integer e : list) {
+            b1.append(e).append(',');
+        }
+        long time = System.currentTimeMillis() - start;
+        foreachTimeList.add(time);
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < size; i++) {
+            b2.append(list.get(i)).append(',');
+        }
+        time = System.currentTimeMillis() - start;
+        forTimeList.add(time);
+        System.out.println(b1.length());
+        System.out.println(b2.length());
+    }
+
+    @Test
 	public void testSort() {
 		Object[] a = new Object[10];
 		for(int i = 0 ; i < 10; i++) {
