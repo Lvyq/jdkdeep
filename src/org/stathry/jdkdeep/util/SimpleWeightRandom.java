@@ -8,49 +8,51 @@ import java.util.Map;
 /**
  * 权重随机
  */
-public class SimpleWeightRandom<K, V extends Number> implements Weight<K, V> {
+public class SimpleWeightRandom<K, W extends Number> {
 
-    private Map<K, WeightEntry<K,V>> weightMap = new HashMap<>();
+    private Map<K, WeightEntry<K, W>> weightMap;
     
-    private double sum = 0;
+    private double sum = 0.0d;
     
-    private boolean startOpen = true;
+    private final boolean startOpen;
 
-    public SimpleWeightRandom(List<K> keys, List<V> weightes, boolean startOpen) {
-        if(keys == null || keys.isEmpty() || weightes == null || keys.size() != weightes.size()) {
-            throw new IllegalArgumentException("keys or weightes");
+    public SimpleWeightRandom(List<K> keyList, List<W> weightList, boolean startOpen) {
+        if (keyList == null || keyList.isEmpty() || weightList == null || keyList.size() != weightList.size()) {
+            throw new IllegalArgumentException("required keyList or weightList.");
         }
         this.startOpen = startOpen;
-        for (int i = 0; i < keys.size(); i++) {
-            K k = keys.get(i);
-            V w = weightes.get(i);
-            double value = weightes.get(i).doubleValue();
-            double startRange = sum;
+        int size = keyList.size();
+        weightMap = new HashMap<>(size * 2);
+
+        K k;
+        W w;
+        double value, min, max;
+        WeightEntry<K, W> entry;
+        for (int i = 0; i < size; i++) {
+            k = keyList.get(i);
+            w = weightList.get(i);
+            value = weightList.get(i).doubleValue();
+            min = sum;
             sum += value;
-            double endRange = sum;
-            WeightEntry<K, V> entry = new WeightEntry<>(k, w, startRange, endRange);
-             weightMap.put(k, entry);
+            max = sum;
+            entry = new WeightEntry<>(k, w, min, max);
+            weightMap.put(k, entry);
         }
     }
 
-    @Override
     public K random() {
         double r = sum * Math.random();
-        for (java.util.Map.Entry<K, WeightEntry<K, V>> e : weightMap.entrySet()) {
-            if(startOpen) {
-                if(r >= e.getValue().getMin() && r < e.getValue().getMax()) {
-                    return e.getKey();
-                }
-            } else {
-                if(r > e.getValue().getMin() && r <= e.getValue().getMax()) {
-                    return e.getKey();
-                }
+        for (Map.Entry<K, WeightEntry<K, W>> e : weightMap.entrySet()) {
+            if (startOpen && r >= e.getValue().getMin() && r < e.getValue().getMax()) {
+                return e.getKey();
+            } else if (r > e.getValue().getMin() && r <= e.getValue().getMax()) {
+                return e.getKey();
             }
         }
         return null;
     }
 
-    static class WeightEntry<K, V extends Number> implements Weight.WeightEntry<K, V> {
+    static class WeightEntry<K, V extends Number> {
         private K key;
         private V weight;
         private double min;

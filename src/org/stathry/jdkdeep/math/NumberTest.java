@@ -24,6 +24,18 @@ import org.stathry.jdkdeep.util.DecimalUtils;
 public class NumberTest {
 
     @Test
+    public void testAssertRange() {
+        Assert.assertEquals(1.0, 1.2, 0.2);
+        Assert.assertEquals(1.0, 1.1, 0.2);
+        Assert.assertEquals(1.0, 1.0, 0.2);
+        Assert.assertEquals(1.0, 0.9, 0.2);
+        Assert.assertEquals(1.0, 0.8, 0.2);
+
+        Assert.assertNotEquals(1.0, 0.7, 0.2);
+        Assert.assertNotEquals(1.0, 1.3, 0.2);
+    }
+
+    @Test
     public void testDoubleFormatToInt() {
         System.out.println(String.format("%.0f", 1.54));
         System.out.println(Math.round(1.54));

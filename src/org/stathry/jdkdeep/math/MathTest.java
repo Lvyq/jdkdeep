@@ -90,7 +90,9 @@ public class MathTest {
 
 	@Test
 	public void testAnd() {
-
+        for (int i = 0; i < 32; i++) {
+            System.out.println(i & 16);
+        }
 	}
 	@Test
 	public void testRound() {
