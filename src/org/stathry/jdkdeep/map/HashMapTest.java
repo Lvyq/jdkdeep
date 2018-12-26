@@ -12,6 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,7 +21,113 @@ import java.util.concurrent.TimeUnit;
  */
 public class HashMapTest {
 
+    // HashMap在单线程的情况下，这样操作是允许的: 插入数据 -> 遍历 -> 插入数据 -> 遍历...
     @Test
+    public void testPutAndIterator() throws InterruptedException {
+        int limit = 10000;
+        final Map<Integer, Integer> map = new HashMap<>(limit * 2);
+        for (int i = 0; i < limit; i++) {
+            map.put(i, i << 1);
+            if(i % 500 == 0) {
+                for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+                    System.out.println(e.getKey() + ", " + e.getValue());
+                }
+                System.out.println();
+                System.out.println();
+                Thread.sleep(3000);
+            }
+        }
+    }
+    // hashMap在填充数据时另一线程遍历会抛异常
+    @Test
+    public void testPuttingAndIterator() throws InterruptedException {
+        int limit = 100_0000;
+        ExecutorService exec = Executors.newFixedThreadPool(2);
+        final Map<Integer, Integer> map = new HashMap<>(limit * 2);
+        exec.execute(() -> {
+            for (int i = 0; i < limit; i++) {
+                map.put(i, i << 1);
+            }
+        });
+
+        Thread.sleep(100);
+        exec.execute(() -> {
+            for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+                System.out.println(e.getKey() + ", " + e.getValue());
+            }
+        });
+        exec.shutdown();
+        exec.awaitTermination(2, TimeUnit.MINUTES);
+    }
+
+    // HashMap的无序是指遍历出来的顺序和插入的顺序不一致。
+    // 如果key的集合相同，则遍历出来的顺序一致
+    @Test
+    public void testMapOrder() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("a", 1);
+        map.put("b", 2);
+        map.put("d", 3);
+        map.put("c", 4);
+        System.out.println(map);
+        StringBuilder b = mapKeys(map);
+        Assert.assertEquals(b.toString(), "abcd");
+
+        Map<String, Integer> map2 = new HashMap<>();
+        map2.put("b", 1);
+        map2.put("a", 2);
+        map2.put("d", 3);
+        map2.put("c", 4);
+        System.out.println(map2);
+        StringBuilder b2 = mapKeys(map2);
+        Assert.assertEquals(b2.toString(), "abcd");
+    }
+
+    private StringBuilder mapKeys(Map<String, Integer> map) {
+        StringBuilder b = new StringBuilder();
+        for (Map.Entry<String, Integer> e : map.entrySet()) {
+            b.append(e.getKey());
+        }
+        return b;
+    }
+
+    @Test
+    public void testMapThreshold() {
+        for (int i = 0; i < 20; i++) {
+            System.out.println("cap=" + i + ", threshold=" + tableSizeFor(1));
+        }
+    }
+
+    static final int tableSizeFor(int cap) {
+        int n = cap - 1;
+        n |= n >>> 1;
+        n |= n >>> 2;
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;
+        return (n < 0) ? 1 : (n >= Integer.MAX_VALUE) ? Integer.MAX_VALUE : n + 1;
+    }
+
+    // 多次调用HashMap的entrySet方法会返回同一实例
+    // 多次调用entrySet方法返回的实例的iterator方法返回的实例都是不同的
+    @Test
+    public void testMapIterator() {
+        Map<Integer, Integer> map = new HashMap<>(32);
+        Set<Map.Entry<Integer, Integer>> es1 = map.entrySet();
+        Set<Map.Entry<Integer, Integer>> es2 = map.entrySet();
+        Assert.assertEquals(es1, es2);
+        Assert.assertNotEquals(es1.iterator(), es2.iterator());
+        map.put(1, 1);
+        Assert.assertEquals(es1, es2);
+        Assert.assertNotEquals(es1.iterator(), es2.iterator());
+        Set<Map.Entry<Integer, Integer>> es3 = map.entrySet();
+        Assert.assertEquals(es3, es2);
+        Assert.assertNotEquals(es3.iterator(), es2.iterator());
+
+        Assert.assertNotEquals(es1.iterator(), es1.iterator());
+    }
+
+/*    @Test
     public void testMapHashCode() {
         Map<String, Integer> map1 = Map.of("a", 1, "b", 666888);
         Map<String, Integer> map11 = Map.of("a", 11, "b", 666888);
@@ -28,7 +136,7 @@ public class HashMapTest {
         System.out.println(map2.hashCode());
         Assert.assertEquals(map1.hashCode(), map2.hashCode());
         Assert.assertNotEquals(map1.hashCode(), map11.hashCode());
-    }
+    }*/
 
     // 不断往map中put数据,put 10000个时再清空，会发现可用内存是先逐渐减小，然后再逐渐增大(这说明put到map中又被清除的数据被回收了)
 //296796688

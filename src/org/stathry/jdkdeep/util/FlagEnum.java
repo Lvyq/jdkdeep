@@ -1,7 +1,6 @@
 package org.stathry.jdkdeep.util;
 
 import org.junit.Test;
-import org.stathry.jdkdeep.lang.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -17,32 +17,41 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * TODO
+ * ProxyTest
  *
  * @date 2018/3/1
  */
-public class LogProxyTest {
+public class ProxyTest {
 
-    static {
+    @Test
+    public void testInterfaceProxy() throws NoSuchFieldException, IllegalAccessException {
+        System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");
+        InvocationHandler handle1 = new SimpleInterfaceInvocationHandler();
+        LoginService ps1 = (LoginService) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{LoginService.class}, handle1);
+        ps1.login();
+        ps1.hello("james");
     }
 
-    public LogProxyTest() {
-        super();
+    @Test
+    public void testMultiInterfaceProxy() throws NoSuchFieldException, IllegalAccessException {
+        System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");
+        InvocationHandler handle1 = new SimpleInterfaceInvocationHandler();
+        LoginService ps1 = (LoginService) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{LoginService.class, HelloService.class}, handle1);
+
+        ps1.hello("james");
+
+        System.out.println();
+
+        ((HelloService)ps1).sayHello("liming");
     }
 
     @Test
     public void testLogProxy1() throws NoSuchFieldException, IllegalAccessException {
-//        System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         System.getProperties().put("jdk.proxy.ProxyGenerator.saveGeneratedFiles", "true");
         LoginService s1 = new LoginService1();
         InvocationHandler handle1 = new LogInvocationHandler(s1);
         LoginService ps1 = (LoginService) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{LoginService.class}, handle1);
-//        System.out.println(ps1);
-//        System.out.println(s1.equals(ps1));
-//        ps1.login();
         ps1.login();
-//        ps1.hello("ddm");
-//        ps1.hello("ddm");
     }
 
     @Test

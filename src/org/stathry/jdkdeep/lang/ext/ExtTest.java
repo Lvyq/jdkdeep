@@ -1,5 +1,6 @@
 package org.stathry.jdkdeep.lang.ext;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -16,5 +17,12 @@ public class ExtTest {
 		f0.name2 = "";
 		f0.name3= "";
 	}
+
+    @Test
+    public void testNoOver() {
+        Father f = new Son();
+        System.out.println(f.getName());
+        Assert.assertEquals("fname", f.getName());
+    }
 
 }

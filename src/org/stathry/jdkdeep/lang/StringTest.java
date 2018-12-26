@@ -236,7 +236,7 @@ public class StringTest {
 
 	@Test
 	public void test007() {
-		StringUtils.m();
+		StringTest1.m();
 	}
 
 	@Test

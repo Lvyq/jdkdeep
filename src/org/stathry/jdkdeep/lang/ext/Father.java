@@ -12,6 +12,7 @@ public class Father {
 	protected String name2;
 	String name3;
 	private String name4;
+	private String name = "fname";
 
 	public Father() {
 	}
@@ -56,4 +57,7 @@ public class Father {
 		this.name4 = name4;
 	}
 
+    public String getName() {
+        return name;
+    }
 }

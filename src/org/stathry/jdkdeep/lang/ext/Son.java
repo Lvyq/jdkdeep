@@ -7,6 +7,8 @@ package org.stathry.jdkdeep.lang.ext;
  */
 public class Son extends Father {
 
+    private String name = "sname";
+
 	public Son() {
 		super();
 	}

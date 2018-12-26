@@ -24,6 +24,13 @@ import org.stathry.jdkdeep.util.DecimalUtils;
 public class NumberTest {
 
     @Test
+    public void test0110() {
+        // 按位取反
+        int n = -10;
+        System.out.println(~n);
+    }
+
+    @Test
     public void testAssertRange() {
         Assert.assertEquals(1.0, 1.2, 0.2);
         Assert.assertEquals(1.0, 1.1, 0.2);
@@ -131,6 +138,18 @@ public class NumberTest {
 		Assert.assertTrue("12345.68".equals(u.format(12345.678)));
 //		Assert.assertTrue("301353.1".equals(u.format(301353.05)));
 //		Assert.assertTrue("301353.1".equals(u.format(new BigDecimal("301353.05"))));
+	}
+
+	@Test
+	public void testBigDecimalStringConstructor() {
+        double d1 = 0.10334;
+        System.out.println(new BigDecimal(d1));
+        System.out.println(new BigDecimal(String.valueOf(d1)));
+        System.out.println(BigDecimal.valueOf(d1));
+
+        Assert.assertNotEquals("0.10334", new BigDecimal(d1).toString());
+        Assert.assertEquals("0.10334", new BigDecimal(String.valueOf(d1)).toPlainString());
+        Assert.assertEquals("0.10334", BigDecimal.valueOf(d1).toString());
 	}
 	
 	@Test

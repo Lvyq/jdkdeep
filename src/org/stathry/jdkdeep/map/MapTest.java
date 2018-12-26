@@ -1,7 +1,6 @@
 package org.stathry.jdkdeep.map;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.management.ManagementFactory;
@@ -9,22 +8,16 @@ import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.junit.Assert.assertEquals;
+
 public class MapTest {
 
     private static final int mapSize = 1000_0000;
-
-    @Test
-    public void testIterator() {
-        Map<Integer, Integer> map = new HashMap<>(mapSize * 2);
-        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
-        }
-//        for (Entry<Integer, Integer> e : map.entrySet()) {
-//        }
-    }
 
     @Test
     public void testHashMapMemory() {
