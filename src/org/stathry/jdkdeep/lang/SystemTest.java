@@ -16,6 +16,11 @@ import org.junit.Test;
 public class SystemTest {
 
     @Test
+    public void testReadProp() {
+        System.out.println(System.getProperty("Log4jContextSelector"));
+    }
+
+    @Test
     public void testSecurityManager() {
         System.out.println(System.getSecurityManager());
     }

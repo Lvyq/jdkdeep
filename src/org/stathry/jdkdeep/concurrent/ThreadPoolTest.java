@@ -17,6 +17,19 @@ import org.junit.Test;
  */
 public class ThreadPoolTest {
 
+    @Test
+    public void testState() {
+        System.out.println(0 << (Integer.SIZE - 3));
+        System.out.println(1 << (Integer.SIZE - 3));
+        System.out.println(2 << (Integer.SIZE - 3));
+        System.out.println(3 << (Integer.SIZE - 3));
+
+        System.out.println(1L << 10L);
+        System.out.println(1L << 100L);
+        System.out.println(1L << 1000L);
+        System.out.println(1L << 10000L);
+    }
+
 	@Test
 	public void testFix() throws InterruptedException {
 		ExecutorService exec = Executors.newFixedThreadPool(10);

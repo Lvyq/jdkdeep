@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.BinaryOperator;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -29,21 +30,41 @@ import org.junit.Test;
  */
 public class StreamTest {
 
+    @Test
+    public void testFilter() {
+        System.out.println(1 & 2);
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+        Stream<Integer> stream = list.stream().filter(new Predicate<Integer>() {
+            @Override
+            public boolean test(Integer n) {
+                return (n.intValue() & 1) != 1;
+            }
+        });
+        List<Integer> list2 = stream.collect(Collectors.toList());
+
+        System.out.println(list2);
+        Assert.assertEquals(2, list2.size());
+        Assert.assertEquals(4, list2.get(1).intValue());
+    }
+
 	@Test
 	public void testSum0() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-		System.out.println(list.stream().reduce(0, new BinaryOperator<Integer>() {
+		int sum1 = list.stream().reduce(0, new BinaryOperator<Integer>() {
 
 			@Override
 			public Integer apply(Integer t, Integer u) {
 
 				return t + u;
 			}
-		}).intValue());
+		}).intValue();
 
-		System.out.println(list.stream().reduce(0, (r, e) -> r + e).intValue());
+		int sum2 = list.stream().reduce(0, (r, e) -> r + e);
 
-		System.out.println(Stream.of(1, 2, 3, 4, 5).reduce((r, e) -> r + e).get());
+		int sum3 = Stream.of(1, 2, 3, 4, 5).reduce((r, e) -> r + e).get();
+		Assert.assertEquals(sum1, 15);
+		Assert.assertEquals(sum2, 15);
+		Assert.assertEquals(sum3, 15);
 	}
 
 	@Test

@@ -18,6 +18,51 @@ import java.util.List;
 public class ArrayTest {
 
     @Test
+    public void testReadConsequentArrayTime() {
+        int limit = 1024 * 1024, len = 8;
+        long[][] arr = initLongArr(limit, len);
+
+        long sum = 0, startTime = System.currentTimeMillis();
+        for (int i = 0; i < limit; i++) {
+            for (int j = 0; j < len; j++) {
+                sum += arr[i][j];
+            }
+        }
+        System.out.println("read consequent array, limit " + limit + ", len " + len + ", time " + (System.currentTimeMillis() - startTime) + "ms");
+
+        sum = 0;
+        startTime = System.currentTimeMillis();
+        for (int i = limit - 1; i >= 0; i--) {
+            for (int j = len - 1; j >= 0; j--) {
+                sum += arr[i][j];
+            }
+        }
+        System.out.println("order by desc, read consequent array, limit " + limit + ", len " + len + ", time " + (System.currentTimeMillis() - startTime) + "ms");
+
+        sum = 0;
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < limit; j++) {
+                sum += arr[j][i];
+            }
+        }
+        System.out.println("read not consequent array limit " + limit + ", len " + len + ", time " + (System.currentTimeMillis() - startTime) + "ms");
+    }
+
+
+    private long[][] initLongArr(int limit, int len) {
+
+        long[][] arr = new long[limit][];
+        for (int i = 0; i < limit; i++) {
+            arr[i] = new long[len];
+            for (int j = 0; j < len; j++) {
+                arr[i][j] = i * j;
+            }
+        }
+        return arr;
+    }
+
+    @Test
     public void testArrayType() {
         int[] a1 = {2, 4, 6};
         Object[] a2 = {new Object(), new Object()};

@@ -16,14 +16,26 @@ public class SortUtils {
         int[] a = new int[] {3, 2, 8, 1};
         printa(a);
         //
-        quickSort(a);
+//        quickSort(a);
         // insertSort(a);
         // selectSort(a);
         // mergeSort(a);
-        //
+        bubbleSort(a);
         printa(a);
         // testMerge();
         // testMerge0();
+    }
+
+    public static void bubbleSort(int []arr) {
+        for(int i =0;i<arr.length-1;i++) {
+            for(int j=0;j<arr.length-i-1;j++) {//-1为了防止溢出
+                if(arr[j]>arr[j+1]) {
+                    int temp = arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                }
+            }
+        }
     }
 
     public static void quickSort(int[] a) {

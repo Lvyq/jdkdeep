@@ -2,12 +2,15 @@ package org.stathry.jdkdeep.classload;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.Enumeration;
 
 import org.junit.Test;
 import org.stathry.jdkdeep.compare.User;
+import org.stathry.jdkdeep.util.Assert;
 
 //import com.sun.javaws.Launcher;
 
@@ -18,7 +21,23 @@ import org.stathry.jdkdeep.compare.User;
  */
 public class ClassLoadTest {
 
-	@Test
+    @Test
+    public void testGetClassResource() throws IOException {
+        assertGetClassResource("rt.jar", "java/lang/Object.class");
+        assertGetClassResource("junit-4.12.jar", "org/junit/Test.class");
+    }
+
+    private void assertGetClassResource(String jarName, String resourceName) throws IOException {
+        Enumeration<URL> urls = ClassLoader.getSystemResources(resourceName);
+        URL url;
+        for (; urls.hasMoreElements(); ) {
+            url = urls.nextElement();
+            System.out.println(url);
+            Assert.isTrue(url.getPath().contains(jarName));
+        }
+    }
+
+    @Test
 	public void testMyClassLoader() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		StathryClassLoader loader = new StathryClassLoader("/temp/classpath");

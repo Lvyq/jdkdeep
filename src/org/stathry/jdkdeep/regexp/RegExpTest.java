@@ -28,8 +28,42 @@ public class RegExpTest {
     private static final char SEP = ',';
 
     @Test
+    public void testMatchRegKeyChars() {
+        Assert.assertTrue(Pattern.compile("urealsoon\\.").matcher("urealsoon.").matches());
+        Assert.assertTrue(Pattern.compile("sms\\-center").matcher("sms-center").matches());
+    }
+
+    // group分组是按括号内正则分组，如果匹配成功，则group(0)返回整个匹配的字符串，group(1)返回第一个括号匹配的字符串，group(2)以此类推
+    @Test
+    public void testGroupStrs() {
+        Pattern pattern = Pattern.compile("www\\.(\\w+)\\.com");
+        String in = "www.google.com www.taobao.com";
+        Matcher m = pattern.matcher(in);
+        List<String> hosts = new ArrayList<>();
+        while (m.find()) {
+            hosts.add(m.group(1));
+        }
+        Assert.assertEquals(2, hosts.size());
+        Assert.assertEquals("google", hosts.get(0));
+        Assert.assertEquals("taobao", hosts.get(1));
+    }
+
+    @Test
+    public void testGroupStr() {
+        Pattern pattern = Pattern.compile("urealsoon\\.sms\\-center\\.smsStatusSync\\.(\\w+)\\.key");
+        String in = "urealsoon.sms-center.smsStatusSync.wotao.key";
+        Matcher m = pattern.matcher(in);
+        if(m.find()) {
+            System.out.println(m.group(0));
+            System.out.println(m.group(1));
+            Assert.assertEquals(in, m.group(0));
+            Assert.assertEquals("wotao", m.group(1));
+        }
+    }
+
+    @Test
     public void testGroup() {
-        // group分组是按括号内正则分组，如果匹配成功，则group(0)返回整个匹配的字符串，group(1)返回第一个括号匹配的字符串，group(2)以此类推
+
         String reg = "(\\d+)天内有(\\d+)天无通话记录";
         String in = "180天内有116天无通话记录";
         Matcher m = Pattern.compile(reg).matcher(in);
@@ -63,8 +97,6 @@ public class RegExpTest {
         System.out.println(end - start);
         System.out.println(counter.longValue());
     }
-
-
 
     // 1370,1438,1477
     @Test
