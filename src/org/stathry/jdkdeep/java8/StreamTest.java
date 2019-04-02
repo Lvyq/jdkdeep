@@ -31,15 +31,19 @@ import org.junit.Test;
 public class StreamTest {
 
     @Test
+    public void testGroupList() {
+        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5);
+        Map<Integer, List<Integer>> map = list.stream().collect(Collectors.groupingBy(n -> n % 2));
+        System.out.println(map);
+        Assert.assertNotNull(map);
+        Assert.assertEquals(2, map.size());
+    }
+
+    @Test
     public void testFilter() {
         System.out.println(1 & 2);
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-        Stream<Integer> stream = list.stream().filter(new Predicate<Integer>() {
-            @Override
-            public boolean test(Integer n) {
-                return (n.intValue() & 1) != 1;
-            }
-        });
+        Stream<Integer> stream = list.stream().filter(n -> (n.intValue() & 1) != 1);
         List<Integer> list2 = stream.collect(Collectors.toList());
 
         System.out.println(list2);
@@ -50,14 +54,7 @@ public class StreamTest {
 	@Test
 	public void testSum0() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
-		int sum1 = list.stream().reduce(0, new BinaryOperator<Integer>() {
-
-			@Override
-			public Integer apply(Integer t, Integer u) {
-
-				return t + u;
-			}
-		}).intValue();
+		int sum1 = list.stream().reduce(0, (t, u) -> t + u).intValue();
 
 		int sum2 = list.stream().reduce(0, (r, e) -> r + e);
 

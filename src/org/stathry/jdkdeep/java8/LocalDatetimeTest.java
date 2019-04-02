@@ -1,5 +1,7 @@
 package org.stathry.jdkdeep.java8;
 
+import org.junit.Test;
+
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -7,17 +9,30 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
-
-import org.junit.Test;
 
 /**
- * TODO
+ * LocalDatetimeTest
  * @author dongdaiming
  * @date 2017年12月6日
  */
 public class LocalDatetimeTest {
+
+    @Test
+    public void testMinusMon() {
+        LocalDate now = LocalDate.now();
+        for (int i = 0; i < 40; i++) {
+            System.out.println(now.minusDays(i).minusMonths(1) + "---" + now.minusDays(i));
+        }
+    }
+
+    @Test
+    public void testDatetime() {
+        LocalDateTime time1 = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        LocalDateTime time2 = LocalDate.now().atStartOfDay();
+        System.out.println(time1);
+        System.out.println(time2);
+        System.out.println(time1.compareTo(time2));
+    }
 
     @Test
     public void testMills2LocalDate() {

@@ -61,6 +61,14 @@ public class StringTest {
     }
 
     @Test
+    public void testSplitEmpty() {
+        String s = "a,b,c,,";
+        String[] a = s.split(",");
+        System.out.println(Arrays.toString(a));
+        Assert.assertEquals(3, a.length);
+    }
+
+    @Test
     public void testSplit() {
         String reg = "[;|,|:]";
         String s = "a;b,c:d";

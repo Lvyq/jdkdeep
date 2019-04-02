@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -66,6 +67,36 @@ public class ListTest {
         System.out.println("list query time:" + (System.currentTimeMillis() - begin));
     }
 
+    @Test(expected = ConcurrentModificationException.class)
+//    @Test
+    public void testListEachRemove2() {
+        List<String> a = new ArrayList<>();
+        a.add("1");
+        a.add("2");
+
+        for (String temp : a) {
+            System.out.println("temp:" + temp);
+            if ("2".equals(temp)) { a.remove(temp);
+            }
+        }
+        System.out.println(a);
+    }
+
+    @Test
+    public void testListEachRemove1() {
+        List<String> a = new ArrayList<>();
+        a.add("1");
+        a.add("2");
+
+        // 因为删除掉一个元素后游标已经到达尾端了，所以不再调用Itr.next()，所以此处没有异常
+        for (String temp : a) {
+            System.out.println("temp:" + temp);
+            if ("1".equals(temp)) { a.remove(temp);
+            }
+        }
+        System.out.println(a);
+    }
+
     @Test
     public void testVectorAddNull() {
         List<String> l = new Vector<>();
@@ -89,12 +120,16 @@ public class ListTest {
             list1.add(i);
             list2.add(i);
         }
+
         for (int i = 0, j = 3; i < 3 ; i++) {
             list1.remove(j);
         }
-        System.out.println(list1);
+
         list2.subList(3, 6).clear();
+
+        System.out.println(list1);
         System.out.println(list2);
+        Assert.assertEquals(list1, list2);
     }
 
 //    @Test

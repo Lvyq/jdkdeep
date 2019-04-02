@@ -9,6 +9,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,6 +23,28 @@ import org.stathry.jdkdeep.util.DecimalUtils;
  * @date 2018年1月16日
  */
 public class NumberTest {
+
+    @Test
+    public void testLongRange() {
+        // 922亿亿
+        System.out.println(Long.MAX_VALUE);
+        // 21亿
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Integer.toBinaryString(4));
+    }
+
+    @Test
+    public void testDivideAndRemainder() {
+        BigDecimal[] r = BigDecimal.TEN.divideAndRemainder(BigDecimal.valueOf(3));
+        System.out.println(Arrays.toString(r));
+        Assert.assertEquals(3, r[0].intValue());
+        Assert.assertEquals(1, r[1].intValue());
+
+        BigDecimal[] r2 = BigDecimal.TEN.divideAndRemainder(BigDecimal.valueOf(4));
+        System.out.println(Arrays.toString(r2));
+        Assert.assertEquals(2, r2[0].intValue());
+        Assert.assertEquals(2, r2[1].intValue());
+    }
 
     @Test
     public void test0110() {

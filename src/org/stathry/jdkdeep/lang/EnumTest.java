@@ -8,6 +8,14 @@ import java.util.*;
 public class EnumTest {
 
     @Test
+    public void testEmptyEnumLen() {
+        System.out.println(Enum1.values());
+        Assert.assertEquals(0, Enum1.values().length);
+    }
+
+    private static enum Enum1 {}
+
+    @Test
     public void testEnumUsages() {
         Assert.assertEquals(3, Opt.ADD.apply(1 , 2));
         Assert.assertEquals(1, Opt.SUB.apply(3 , 2));

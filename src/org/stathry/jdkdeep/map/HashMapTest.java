@@ -21,6 +21,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class HashMapTest {
 
+    // n=数组长度
+    // p = tab[i = (n - 1) & hash]
+
     // HashMap在单线程的情况下，这样操作是允许的: 插入数据 -> 遍历 -> 插入数据 -> 遍历...
     @Test
     public void testPutAndIterator() throws InterruptedException {

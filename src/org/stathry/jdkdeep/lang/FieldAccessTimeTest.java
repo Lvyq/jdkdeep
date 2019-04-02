@@ -7,54 +7,58 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * TODO
+ * FieldAccessTimeTest
  *
  * @author dongdaiming
  * @date 18/05/25
  */
 public class FieldAccessTimeTest {
 
-    private long time = 2018;
-    private static final int LIMIT = 1000_0000;
-    private static final int TEST_TIMES = 100;
+    private static final long LIMIT = 1000_0000;
+    private long count = 0;
 
-    // testReadLocalVar,test times 100, every calc limit 10000000, avg time 11.500000
-    @Test
-    public void testReadLocalVar() {
-        List<Long> list = new ArrayList<>(TEST_TIMES);
-        List<Long> datas = new ArrayList<>(TEST_TIMES);
-        for (int j = 0; j < TEST_TIMES; j++) {
-            long start = System.currentTimeMillis();
-            long sum = 0;
-            long t = time;
-            for (int i = 0; i < LIMIT; i++) {
-                sum = sum + t + i;
-            }
-            datas.add(sum);
-            list.add((System.currentTimeMillis() - start));
-        }
-        double avg = list.stream().mapToLong(a -> a).average().getAsDouble();
-        System.out.println(String.format("testReadLocalVar,test times %d, every calc limit %d, avg time %f.",
-                TEST_TIMES, LIMIT, avg));
+    public long getCount() {
+        return count;
     }
 
-//    testReadField,test times 100, every calc limit 10000000, avg time 18.000000.
     @Test
-    public void testReadField() {
-        List<Long> list = new ArrayList<>(TEST_TIMES);
-        List<Long> datas = new ArrayList<>(TEST_TIMES);
-        for (int j = 0; j < TEST_TIMES; j++) {
-            long start = System.currentTimeMillis();
-            long sum = 0;
-            for (int i = 0; i < LIMIT; i++) {
-                sum = sum + time + i +j;
-            }
-            datas.add(sum);
-            list.add((System.currentTimeMillis() - start));
+    public void testGetFieldVSDefineVar() {
+        long start = System.currentTimeMillis();
+        long count = 0;
+        long n = getCount();
+        for (int j = 0; j < LIMIT; j++) {
+            count += n;
         }
-        double avg = list.stream().mapToLong(a -> a).average().getAsDouble();
-        System.out.println(String.format("testReadField,test times %d, every calc limit %d, avg time %f.",
-                TEST_TIMES, LIMIT, avg));
+        long time = System.currentTimeMillis() - start;
+        System.out.println(String.format("testGetFieldVSDefineVar1, count %d, times %d, limit %d", count, time, LIMIT));
+
+        start = System.currentTimeMillis();
+        for (int j = 0; j < LIMIT; j++) {
+            count += getCount();
+        }
+        time = System.currentTimeMillis() - start;
+        System.out.println(String.format("testGetFieldVSDefineVar2, count %d, times %d, limit %d", count, time, LIMIT));
+    }
+
+    @Test
+    public void testCountByField() {
+        long start = System.currentTimeMillis();
+        for (int j = 0; j < LIMIT; j++) {
+            count++;
+        }
+        long time = System.currentTimeMillis() - start;
+        System.out.println(String.format("testCountByField, count %d, times %d, limit %d", count, time, LIMIT));
+    }
+
+    @Test
+    public void testCountLocalVar() {
+        long count = 0;
+        long start = System.currentTimeMillis();
+        for (int j = 0; j < LIMIT; j++) {
+            count++;
+        }
+        long time = System.currentTimeMillis() - start;
+        System.out.println(String.format("testCountLocalVar, count %d, times %d, limit %d", count, time, LIMIT));
     }
 
 }
